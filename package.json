@@ -1,6 +1,6 @@
 {
     "name": "@defstudio/vite-livewire-plugin",
-    "version": "0.0.5",
+    "version": "0.0.10",
     "author": {
         "name": "Fabio Ivona"
     },
@@ -23,6 +23,7 @@
         "/dist"
     ],
     "scripts": {
+        "deploy": "npm run build && npm publish",
         "build": "npm run build-plugin",
         "build-plugin": "rm -rf dist && tsc",
         "lint": "eslint --ext .ts ./src"
