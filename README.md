@@ -1,4 +1,12 @@
+# Vite Livewire Plugin
 
+<a href="https://www.npmjs.com/package/@defstudio/vite-livewire-plugin"><img src="https://img.shields.io/npm/dt/@defstudio/vite-livewire-plugin" alt="Total Downloads"></a>
+<a href="https://www.npmjs.com/package/@defstudio/vite-livewire-plugin"><img src="https://img.shields.io/npm/v/@defstudio/vite-livewire-plugin" alt="Latest Stable Version"></a>
+<a href="https://www.npmjs.com/package/@defstudio/vite-livewire-plugin"><img src="https://img.shields.io/npm/l/@defstudio/vite-livewire-plugin" alt="License"></a>
+
+Vite has become Laravel's default frontend build tool.
+
+This plugin configures Vite for use with a Livewire setup, allowing components hot reload without losing their state when their blade and class files change.
 
 ## installation
 
