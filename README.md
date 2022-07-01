@@ -94,6 +94,8 @@ export default defineConfig({
 });
 ```
 
-## important!
+## warning
 
-this Vite plugin, because of Livewire design, is not compatible with other plugins that refresh the page when a `.blade.php` file changes (i.e. laravel/vite-plugin with blade option active)
+this Vite plugin, because of Livewire design, is not fully compatible with other plugins that refresh the page when a `.blade.php` file changes (i.e. laravel/vite-plugin with blade option active)
+
+in order to make them work together, `blade` files in `**/livewire/**` shoud be excluded from blade hot reload.

@@ -81,7 +81,7 @@ export default function livewire(config?: PluginConfig): PluginOption {
                             });
                             const label = document.createElement('label');
                             label.style.cssText = "position: fixed; bottom: 10px; right: 10px; font-size: 12px; cursor: pointer";
-                            label.innerHTML += "Enable Livewire Sync&nbsp;";
+                            label.innerHTML += "Enable Livewire Hot Reload&nbsp;";
                             label.append(checkbox);
                             window.document.body.insertBefore(label, window.document.body.lastChild);
                             import.meta.hot.on('livewire-update', data => {
