@@ -23,7 +23,6 @@
         "/dist"
     ],
     "scripts": {
-        "publish": "npm publish",
         "build": "npm run build-plugin",
         "build-plugin": "rm -rf dist && tsc",
         "lint": "eslint --ext .ts ./src"
