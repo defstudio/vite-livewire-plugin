@@ -1,8 +1,50 @@
-import {PluginOption} from "vite";
+import {HmrContext, PluginOption} from "vite";
 import {Update} from "vite/types/hmrPayload";
+
+import minimatch from 'minimatch';
 
 interface PluginConfig {
     refresh?: string | string[];
+    watch?: string | string[];
+}
+
+function refresh(ctx: HmrContext, config?: PluginConfig): void {
+    let refresh = config?.refresh;
+
+    if (refresh) {
+        if (!Array.isArray(refresh)) {
+            refresh = [refresh];
+        }
+
+        const updates = [];
+        for (const path of refresh) {
+            let type;
+            if (path.endsWith('css')) {
+                type = 'css-update';
+            } else if (path.endsWith('js')) {
+                type = 'js-update';
+            } else {
+                continue;
+            }
+
+            updates.push({
+                type: type,
+                path: path,
+                acceptedPath: path,
+                timestamp: (new Date).getTime(),
+            } as Update)
+        }
+
+        ctx.server.ws.send({
+            type: 'update',
+            updates: updates,
+        });
+    }
+
+    ctx.server.ws.send({
+        type: 'custom',
+        event: 'livewire-update',
+    });
 }
 
 export default function livewire(config?: PluginConfig): PluginOption {
@@ -71,44 +113,21 @@ export default function livewire(config?: PluginConfig): PluginOption {
             }
         },
         handleHotUpdate(ctx) {
-            if (ctx.file.endsWith('.blade.php')) {
 
-                let refresh = config?.refresh;
+            let watch = config?.watch ?? [
+                '**/resources/views/**/*.blade.php',
+                '**/app/**/Livewire/**/*.php'
+            ];
 
-                if(refresh){
-                    if(!Array.isArray(refresh)){
-                        refresh = [refresh];
-                    }
+            if (!Array.isArray(watch)) {
+                watch = [watch];
+            }
 
-                    const updates = [];
-                    for (const path of refresh) {
-                        let type;
-                        if(path.endsWith('css')){
-                            type = 'css-update';
-                        }else if (path.endsWith('js')){
-                            type = 'js-update';
-                        }else{
-                            continue;
-                        }
-
-                        updates.push({
-                            type: type,
-                            path: path,
-                            acceptedPath: path,
-                            timestamp: (new Date).getTime(),
-                        } as Update)
-                    }
-
-                    ctx.server.ws.send({
-                        type: 'update',
-                        updates: updates,
-                    });
+            for (const pattern of watch) {
+                console.log("Checking", ctx.file, pattern, minimatch(ctx.file, pattern))
+                if(minimatch(ctx.file, pattern)){
+                    refresh(ctx, config)
                 }
-
-                ctx.server.ws.send({
-                    type: 'custom',
-                    event: 'livewire-update',
-                });
             }
         }
     }
