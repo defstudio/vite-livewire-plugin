@@ -21,7 +21,7 @@ export default function livewire(config?: PluginConfig): PluginOption {
                 return `
                     export function livewire_hot_reload() {
                         if (import.meta.hot) {
-                            console.log("[vite] livewire hot reload ready");
+                            console.log("[vite] livewire hot reload ready.");
                             const checkbox = document.createElement('input');
                             checkbox.type = 'checkbox';
                             checkbox.style.cssText = "width: 12px; height: 12px; cursor: pointer";
@@ -43,24 +43,21 @@ export default function livewire(config?: PluginConfig): PluginOption {
                             label.append(checkbox);
                             window.document.body.insertBefore(label, window.document.body.lastChild);
                             import.meta.hot.on('livewire-update', data => {
-                                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                                // @ts-ignore
+
                                 if (typeof Livewire === "undefined" || Object.keys(Livewire.components).length === 0) {
-                                    console.log("[vite] full reload");
+                                    console.log("[vite] full reload...");
                                     location.reload();
                                     return;
                                 }
                                 const check = window.document.getElementById("livewire_hot_reload");
-                                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                                // @ts-ignore
+
                                 if (check && !check.checked) {
-                                    console.log('[vite] full reload');
+                                    console.log('[vite] full reload...');
                                     location.reload();
                                     return;
                                 }
-                                console.log('[vite] livewire hot updated');
-                                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                                // @ts-ignore
+                                console.log('[vite] livewire hot updated.');
+
                                 for (const componentId in Livewire.components.componentsById) {
                                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                                     // @ts-ignore
