@@ -48,7 +48,7 @@ and add the livewire hot reload manager in your `app.js` file:
 ```js
 //..
 
-import { livewire_hot_reload } from 'virtual:tailwind-hot-reload'
+import { livewire_hot_reload } from 'virtual:livewire-hot-reload'
 livewire_hot_reload();
 ```
 
