@@ -149,7 +149,6 @@ export default function livewire(config?: PluginConfig): PluginOption {
             }
 
             for (const pattern of watch) {
-                console.log("Checking", ctx.file, pattern, minimatch(ctx.file, pattern))
                 if(minimatch(ctx.file, pattern)){
                     refresh(ctx, config)
                 }
