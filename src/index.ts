@@ -66,7 +66,7 @@ export default function livewire(config?: PluginConfig): PluginOption {
         load(id) {
             if (id === resolvedVirtualModuleId) {
                 return `
-                    function makeOptInCheckbox(): HTMLInputElement
+                    function makeOptInCheckbox()
                     {
                         const checkbox = document.createElement('input');
                         checkbox.type = 'checkbox';
@@ -89,14 +89,16 @@ export default function livewire(config?: PluginConfig): PluginOption {
                         return checkbox;
                     }
 
-                    function makeOptInLabel(): HTMLLabelElement
+                    function makeOptInLabel()
                     {
                         const label = document.createElement('label');
                         label.style.cssText = "position: fixed; bottom: 10px; right: 10px; font-size: 12px; cursor: pointer";
                         label.innerHTML += "Enable Livewire Hot Reload&nbsp;";
+
+                        return label;
                     }
 
-                    function injectOptInCheckbox(): void
+                    function injectOptInCheckbox()
                     {
                        const label = makeOptInLabel();
                        label.append(makeOptInCheckbox());
