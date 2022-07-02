@@ -105,7 +105,7 @@ By adding an `VITE_LIVEWIRE_OPT_IN=true` entry in your `.env` file an opt-in che
 
 ## Warning
 
-This Vite plugin, because of Livewire design, is not fully compatible with other plugins that refresh the page when a `.blade.php` file changes (i.e. laravel/vite-plugin with blade option active)
+This Vite plugin, as Livewire neets to persist in page, is not fully compatible with other plugins that full refresh the page when a `.blade.php` file changes (i.e. laravel/vite-plugin with blade option active)
 
 in order to make them work together, `blade` files in `**/livewire/**` shoud be excluded from blade hot reload.
 
