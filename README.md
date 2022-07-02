@@ -8,6 +8,9 @@ Vite has become Laravel's default frontend build tool.
 
 This plugin (made by [def:studio](https://twitter.com/FabioIvona)) configures Vite for use with a Livewire setup, allowing components hot reload without losing their state when their blade or class files change.
 
+Demo video available [below](#demo) in this page
+
+
 ## Installation
 
 ```bash
@@ -127,3 +130,10 @@ Please review [our security policy](../../security/policy) on how to report secu
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+
+
+
+## Demo
+
+https://user-images.githubusercontent.com/8792274/176996785-d4e21ee5-b9f3-4e91-bf3a-4bbc0e87a148.mp4
