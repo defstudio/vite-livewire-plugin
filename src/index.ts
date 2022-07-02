@@ -75,6 +75,7 @@ export default function livewire(config?: PluginConfig): PluginOption {
                         checkbox.checked = sessionStorage.getItem("livewire_hot_reload") === "1";
 
                         sessionStorage.setItem("livewire_hot_reload", checkbox.checked ? "1" : "0");
+                        console.log("[vite] livewire hot reload " + (checkbox.checked ? "enabled." : "disabled."));
 
                         checkbox.addEventListener('change', event => {
                             const eventTarget = event.currentTarget;
@@ -85,7 +86,7 @@ export default function livewire(config?: PluginConfig): PluginOption {
                                 sessionStorage.setItem("livewire_hot_reload", eventTarget.checked ? "1" : "0");
                             }
 
-                             console.log("[vite] livewire hot reload " + (eventTarget.checked ? "enabled" : "disabled"));
+                             console.log("[vite] livewire hot reload " + (eventTarget.checked ? "enabled." : "disabled."));
                         });
 
                         return checkbox;
@@ -95,7 +96,7 @@ export default function livewire(config?: PluginConfig): PluginOption {
                     {
                         const label = document.createElement('label');
                         label.style.cssText = "position: fixed; bottom: 10px; right: 10px; font-size: 12px; cursor: pointer";
-                        label.innerHTML += "Enable Livewire Hot Reload&nbsp;";
+                        label.innerHTML += "Livewire Hot Reload&nbsp;";
 
                         return label;
                     }
