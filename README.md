@@ -6,15 +6,15 @@
 
 Vite has become Laravel's default frontend build tool.
 
-This plugin configures Vite for use with a Livewire setup, allowing components hot reload without losing their state when their blade and class files change.
+This plugin (made by [def:studio](https://twitter.com/FabioIvona)) configures Vite for use with a Livewire setup, allowing components hot reload without losing their state when their blade or class files change.
 
-## installation
+## Installation
 
 ```bash
 npm install --save-dev @defstudio/vite-livewire-plugin
 ```
 
-## usage
+## Usage
 
 Livewire hot reload can be enabled by adding the `livewire()` plugin to the `vite.config.js` file:
 
@@ -100,8 +100,30 @@ In some cases (i.e. when working on non-livewire elements), you'll want to full 
 
 By adding an `VITE_LIVEWIRE_OPT_IN=true` entry in your `.env` file an opt-in checkbox will show on the bottom right corner of the webpage, allowing you to enable/disable livewire hot reload. If disabled: a full page reload will be triggered when blade files are changed.
 
-## warning
+## Warning
 
-this Vite plugin, because of Livewire design, is not fully compatible with other plugins that refresh the page when a `.blade.php` file changes (i.e. laravel/vite-plugin with blade option active)
+This Vite plugin, because of Livewire design, is not fully compatible with other plugins that refresh the page when a `.blade.php` file changes (i.e. laravel/vite-plugin with blade option active)
 
 in order to make them work together, `blade` files in `**/livewire/**` shoud be excluded from blade hot reload.
+
+
+## Changelog
+
+Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently. [Follow Us](https://twitter.com/FabioIvona) on Twitter for more updates about this package.
+
+## Contributing
+
+Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
+
+## Security Vulnerabilities
+
+Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+
+## Credits
+
+- [Fabio Ivona](https://github.com/def-studio)
+- [All Contributors](../../contributors)
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
