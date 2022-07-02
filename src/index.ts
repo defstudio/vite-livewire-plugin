@@ -84,6 +84,8 @@ export default function livewire(config?: PluginConfig): PluginOption {
                             if (eventTarget instanceof HTMLInputElement) {
                                 sessionStorage.setItem("livewire_hot_reload", eventTarget.checked ? "1" : "0");
                             }
+
+                             console.log("[vite] livewire hot reload " + (eventTarget.checked ? "enabled" : "disabled"));
                         });
 
                         return checkbox;
@@ -107,10 +109,12 @@ export default function livewire(config?: PluginConfig): PluginOption {
 
                     export function livewire_hot_reload() {
                         if (import.meta.hot) {
-                            console.log("[vite] livewire hot reload ready.");
+
 
                             if(import.meta.env.VITE_LIVEWIRE_OPT_IN){
                                 injectOptInCheckbox();
+                            }else{
+                                 console.log("[vite] livewire hot reload enabled.");
                             }
 
                             import.meta.hot.on('livewire-update', data => {
@@ -121,9 +125,14 @@ export default function livewire(config?: PluginConfig): PluginOption {
                                 }
                                 const checkbox = window.document.getElementById("livewire_hot_reload");
 
-                                if (checkbox && !checkbox.checked && data.blade_updated) {
+                                if (checkbox && !checkbox.checked) {
+                                    if(!data.blade_updated){
+                                        return;
+                                    }
+
                                     console.log('[vite] full reload...');
                                     location.reload();
+
                                     return;
                                 }
 
