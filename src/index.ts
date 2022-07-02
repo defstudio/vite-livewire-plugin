@@ -113,7 +113,7 @@ export default function livewire(config?: PluginConfig): PluginOption {
                                 injectOptInCheckbox();
                             }
 
-                            import.meta.hot.on('livewire-update', (data: {blade_updated: bool}) => {
+                            import.meta.hot.on('livewire-update', data => {
                                 if (typeof Livewire === "undefined" || Object.keys(Livewire.components).length === 0) {
                                     console.log("[vite] full reload...");
                                     location.reload();
