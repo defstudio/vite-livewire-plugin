@@ -53,13 +53,15 @@ function refresh(ctx: HmrContext, config?: PluginConfig): void {
 
 
 export default function livewire(config?: PluginConfig): PluginOption {
-    const virtualModuleId = 'virtual:tailwind-hot-reload'
+    const typoVirtualModuleId = 'virtual:tailwind-hot-reload'
+
+    const virtualModuleId = 'virtual:livewire-hot-reload'
     const resolvedVirtualModuleId = '\0' + virtualModuleId
 
     return {
         name: 'Tailwind Plugin',
         resolveId(id) {
-            if (id === virtualModuleId) {
+            if (id === virtualModuleId || id === typoVirtualModuleId) {
                 return resolvedVirtualModuleId
             }
         },
