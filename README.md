@@ -68,7 +68,7 @@ From now on, when a `.blade.php` or Livewire `.php` class is updated, the hot re
 
 by default `livewire()` plugin will trigger hot reload when a `.blade.php` file changes in `resources/view/**` folders or a  `.php` file changes in `app/**/Livewire/**` folders.
 
-if you wish to change this behaviuor (because you have lviewire files in other locations), this can be achieved using the `watch` config:
+if you wish to change this behavior (because you have livewire files in other locations), this can be achieved using the `watch` config:
 
 ```js
 // vite.config.js 
@@ -93,6 +93,12 @@ export default defineConfig({
     ],
 });
 ```
+
+### Opt in hot reload
+
+In some cases (i.e. when working on non-livewire elements), you'll want to full reload he page when a blade file is changed.
+
+By adding an `VITE_LIVEWIRE_OPT_IN=true` entry in your `.env` file an opt-in checkbox will show on the bottom right corner of the webpage, allowing you to enable/disable livewire hot reload. If disabled: a full page reload will be triggered when blade files are changed.
 
 ## warning
 
