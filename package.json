@@ -26,7 +26,8 @@
         "deploy": "npm run build && npm publish",
         "build": "npm run build-plugin",
         "build-plugin": "rm -rf dist && tsc",
-        "lint": "eslint --ext .ts ./src"
+        "lint": "eslint --ext .ts ./src",
+        "test": "vitest run"
     },
     "devDependencies": {
         "@types/minimatch": "^3.0.5",

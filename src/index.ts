@@ -1,4 +1,4 @@
-import {HmrContext, PluginOption} from "vite";
+import {HmrContext, Plugin} from "vite";
 import {Update} from "vite/types/hmrPayload";
 
 import minimatch from 'minimatch';
@@ -8,16 +8,28 @@ interface PluginConfig {
     watch?: string | string[];
 }
 
-function refresh(ctx: HmrContext, config?: PluginConfig): void {
-    let refresh = config?.refresh;
+interface ResolvedPluginConfig extends PluginConfig{
+    refresh: string[];
+    watch: string[];
+}
 
-    if (refresh) {
-        if (!Array.isArray(refresh)) {
-            refresh = [refresh];
-        }
+interface LivewirePlugin extends Plugin {
+    readonly pluginConfig: PluginConfig;
+}
+
+const defaultConfig: PluginConfig = {
+    watch: [
+        '**/resources/views/**/*.blade.php',
+        '**/app/**/Livewire/**/*.php',
+    ],
+    refresh: [],
+}
+
+function refresh(ctx: HmrContext, config: ResolvedPluginConfig): void {
+    if (config.refresh) {
 
         const updates = [];
-        for (const path of refresh) {
+        for (const path of config.refresh) {
             let type;
             if (path.endsWith('css')) {
                 type = 'css-update';
@@ -50,15 +62,56 @@ function refresh(ctx: HmrContext, config?: PluginConfig): void {
     });
 }
 
+function resolvePluginConfig(config?: PluginConfig | string | string[]): ResolvedPluginConfig {
+    if (typeof config === 'undefined') {
+        config = defaultConfig;
+    }
 
-export default function livewire(config?: PluginConfig): PluginOption {
+    if(typeof config === 'string'){
+        config = [config];
+    }
+
+    if(Array.isArray(config)){
+        const watch = config;
+        config = defaultConfig;
+        config.watch = watch;
+    }
+
+    if(typeof config.refresh === 'undefined'){
+        config.refresh = defaultConfig.refresh;
+    }
+
+    if (typeof config.refresh === 'string') {
+        config.refresh = [config.refresh];
+    }
+
+    if (typeof config.watch === 'undefined') {
+        config.watch = defaultConfig.watch;
+    }
+
+    if (typeof config.watch === 'string') {
+        config.watch = [config.watch];
+    }
+
+
+    return config as ResolvedPluginConfig;
+}
+
+
+export default function livewire(config?: PluginConfig | string | string[]): LivewirePlugin {
+    // There was a typo in first release of this package
+    // this const is left for backward compatibility with
+    // previous setups.
     const typoVirtualModuleId = 'virtual:tailwind-hot-reload'
 
     const virtualModuleId = 'virtual:livewire-hot-reload'
     const resolvedVirtualModuleId = '\0' + virtualModuleId
 
+    const pluginConfig = resolvePluginConfig(config);
+
     return {
         name: 'Tailwind Plugin',
+        pluginConfig: pluginConfig,
         resolveId(id) {
             if (id === virtualModuleId || id === typoVirtualModuleId) {
                 return resolvedVirtualModuleId
@@ -74,12 +127,16 @@ export default function livewire(config?: PluginConfig): PluginOption {
                           window.onload = function() {
                               if( sessionStorage.getItem("livewire_hot_reload_conflict") === '1'){
                                   console.error("" +
-                                   "[vite] Another Vite plugin reloaded the page whilst defstudio/vite-livewire-plugin was refreshing a Livewire component. For optimal results, disable full page reloads when defstudio/vite-livewire-plugin is enabled. For more info, visit out docs: https://github.com/def-studio/vite-livewire-plugin");
+                                   "[vite] Another Vite plugin reloaded the page whilst " +
+                                    "defstudio/vite-livewire-plugin was refreshing a Livewire component. " +
+                                     "For optimal results, disable full page reloads when " +
+                                      "defstudio/vite-livewire-plugin is enabled. " +
+                                       "For more info, visit out docs: https://github.com/def-studio/vite-livewire-plugin");
                               }
 
                               sessionStorage.setItem("livewire_hot_reload_conflict", '0');
 
-                              window.addEventListener("beforeunload", function (event) {
+                              window.addEventListener("beforeunload", () => {
                                 const now = (new Date()).getTime();
 
                                 if(now - lastLivewireUpdate > 200){
@@ -177,19 +234,9 @@ export default function livewire(config?: PluginConfig): PluginOption {
             }
         },
         handleHotUpdate(ctx) {
-
-            let watch = config?.watch ?? [
-                '**/resources/views/**/*.blade.php',
-                '**/app/**/Livewire/**/*.php'
-            ];
-
-            if (!Array.isArray(watch)) {
-                watch = [watch];
-            }
-
-            for (const pattern of watch) {
+            for (const pattern of pluginConfig.watch) {
                 if (minimatch(ctx.file, pattern)) {
-                    refresh(ctx, config)
+                    refresh(ctx, pluginConfig)
                 }
             }
         }
