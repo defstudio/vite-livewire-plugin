@@ -1,8 +1,31 @@
-import {describe, expect, it} from "vitest";
-import livewire from "../src";
+import {afterEach, describe, expect, it, vi} from "vitest";
+import livewire, {defaultWatches} from "../src";
+import {HmrContext, ViteDevServer} from "vite";
 
-describe('vite livewire plugin', () => {
+function fakeContext(file: string = ''): HmrContext {
+    return {
+        file: file,
+        modules: undefined,
+        read(): string | Promise<string> {
+            return undefined;
+        },
+        server: {
+            ws: {
+                send: payload => {
+                }
+            }
+        } as ViteDevServer,
+        timestamp: 0
+    };
+}
 
+function freezeTime(date = new Date(2000, 1, 1, 13)): Date
+{
+    vi.setSystemTime(date);
+    return date;
+}
+
+describe('configuration parse', () => {
     it('should handle missing configuration', () => {
         const plugin = livewire()
         const config = plugin.pluginConfig;
@@ -56,4 +79,146 @@ describe('vite livewire plugin', () => {
         expect(config.refresh).toStrictEqual([]);
         expect(config.watch).toStrictEqual(['foo', 'bar']);
     });
+
+    it('should handle object configuration with string refresh', function () {
+        const plugin = livewire({refresh: 'foo'})
+        const config = plugin.pluginConfig;
+
+        expect(config.refresh).toStrictEqual(['foo']);
+        expect(config.watch).toStrictEqual([
+            '**/resources/views/**/*.blade.php',
+            '**/app/**/Livewire/**/*.php',
+        ]);
+    });
+
+    it('should handle object configuration with array refresh', function () {
+        const plugin = livewire({refresh: ['foo', 'bar']})
+        const config = plugin.pluginConfig;
+
+        expect(config.refresh).toStrictEqual(['foo', 'bar']);
+        expect(config.watch).toStrictEqual([
+            '**/resources/views/**/*.blade.php',
+            '**/app/**/Livewire/**/*.php',
+        ]);
+    });
 });
+
+describe('hot update handling', () => {
+    afterEach(() => {
+        vi.restoreAllMocks()
+    });
+
+    it("should not trigger hot update if file doesn't match any pattern", function () {
+        const plugin = livewire();
+
+        plugin.handleHotUpdate(fakeContext());
+    });
+
+    it("should trigger hot update if file matches default class pattern", function () {
+        const plugin = livewire();
+
+        const context = fakeContext('/var/www/app/Html/Livewire/Test.php');
+        const spy = vi.spyOn(context.server.ws, 'send');
+
+        plugin.handleHotUpdate(context);
+
+        expect(spy).toHaveBeenCalledWith({
+            type: 'custom',
+            event: 'livewire-update',
+            data: {blade_updated: false},
+        });
+    });
+
+    it("should not trigger hot updates when defaults watches are overridden", function () {
+        const plugin = livewire({
+            watch: 'var/www/app/modules/**/views/livewire/**/*.blade.php'
+        });
+
+        const context = fakeContext('/var/www/app/Html/Livewire/Test.php');
+        const spy = vi.spyOn(context.server.ws, 'send');
+
+        plugin.handleHotUpdate(context);
+        expect(spy).toHaveBeenCalledTimes(0);
+
+        context.file = 'var/www/app/modules/invoices/views/livewire/test.blade.php';
+        plugin.handleHotUpdate(context);
+        expect(spy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should allow to add watch patterns to the default ones', function () {
+        const plugin = livewire({
+            watch: [
+                ...defaultWatches,
+                'var/www/app/modules/invoices/views/livewire/test.blade.php',
+            ]
+        });
+
+        const context = fakeContext('/var/www/app/Html/Livewire/Test.php');
+        const spy = vi.spyOn(context.server.ws, 'send');
+
+        plugin.handleHotUpdate(context);
+        expect(spy).toHaveBeenCalledWith({
+            type: 'custom',
+            event: 'livewire-update',
+            data: {blade_updated: false},
+        });
+
+        context.file = 'var/www/app/modules/invoices/views/livewire/test.blade.php';
+        plugin.handleHotUpdate(context);
+        expect(spy).toHaveBeenCalledTimes(2);
+        expect(spy).toHaveBeenLastCalledWith({
+            type: 'custom',
+            event: 'livewire-update',
+            data: {blade_updated: true},
+        });
+    });
+
+    it("should not trigger css refresh by default if matches a file pattern", function () {
+        const plugin = livewire();
+
+        const context = fakeContext('/var/www/resources/views/test.blade.php');
+        const spy = vi.spyOn(context.server.ws, 'send');
+
+        plugin.handleHotUpdate(context);
+
+        expect(spy).toHaveBeenCalledTimes(1);
+    });
+
+    it("should not trigger css refresh when set up and doesn't matches a file pattern", function () {
+        const plugin = livewire({
+            refresh: 'resources/css/app.css'
+        });
+
+        const context = fakeContext('/var/www/resources/components/test.blade.php');
+        const spy = vi.spyOn(context.server.ws, 'send');
+
+        const time = freezeTime();
+
+        plugin.handleHotUpdate(context);
+
+        expect(spy).toHaveBeenCalledTimes(0);
+    });
+
+    it("should trigger css refresh when set up and matches a file pattern", function () {
+        const plugin = livewire({
+            refresh: 'resources/css/app.css'
+        });
+
+        const context = fakeContext('/var/www/resources/views/test.blade.php');
+        const spy = vi.spyOn(context.server.ws, 'send');
+
+        const time = freezeTime();
+
+        plugin.handleHotUpdate(context);
+
+        expect(spy).toHaveBeenCalledTimes(2);
+
+        expect(spy).toHaveBeenCalledWith({
+            type: 'update',
+            updates: [
+                {acceptedPath: "resources/css/app.css", path: "resources/css/app.css", timestamp: time.getTime(), type: 'css-update'}
+            ],
+        })
+    });
+});
+

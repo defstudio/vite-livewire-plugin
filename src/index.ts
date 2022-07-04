@@ -17,19 +17,19 @@ interface LivewirePlugin extends Plugin {
     readonly pluginConfig: PluginConfig;
 }
 
-const defaultConfig: PluginConfig = {
-    watch: [
-        '**/resources/views/**/*.blade.php',
-        '**/app/**/Livewire/**/*.php',
-    ],
+export const defaultWatches: string[] = [
+    '**/resources/views/**/*.blade.php',
+    '**/app/**/Livewire/**/*.php',
+];
+
+export const defaultConfig: PluginConfig = {
+    watch: defaultWatches,
     refresh: [],
 }
 
-function refresh(ctx: HmrContext, config: ResolvedPluginConfig): void {
-    if (config.refresh) {
-
+function triggerUpdates(ctx: HmrContext, refreshList: string[]): void {
         const updates = [];
-        for (const path of config.refresh) {
+        for (const path of refreshList) {
             let type;
             if (path.endsWith('css')) {
                 type = 'css-update';
@@ -47,11 +47,16 @@ function refresh(ctx: HmrContext, config: ResolvedPluginConfig): void {
             } as Update)
         }
 
-        ctx.server.ws.send({
-            type: 'update',
-            updates: updates,
-        });
-    }
+        if(updates.length>0){
+            ctx.server.ws.send({
+                type: 'update',
+                updates: updates,
+            });
+        }
+}
+
+function refresh(ctx: HmrContext, config: ResolvedPluginConfig): void {
+    triggerUpdates(ctx, config.refresh);
 
     ctx.server.ws.send({
         type: 'custom',
@@ -73,7 +78,7 @@ function resolvePluginConfig(config?: PluginConfig | string | string[]): Resolve
 
     if(Array.isArray(config)){
         const watch = config;
-        config = defaultConfig;
+        config = {...defaultConfig};
         config.watch = watch;
     }
 
@@ -93,10 +98,8 @@ function resolvePluginConfig(config?: PluginConfig | string | string[]): Resolve
         config.watch = [config.watch];
     }
 
-
     return config as ResolvedPluginConfig;
 }
-
 
 export default function livewire(config?: PluginConfig | string | string[]): LivewirePlugin {
     // There was a typo in first release of this package
