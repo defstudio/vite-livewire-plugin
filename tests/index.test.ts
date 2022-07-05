@@ -192,8 +192,6 @@ describe('hot update handling', () => {
         const context = fakeContext('/var/www/resources/components/test.blade.php');
         const spy = vi.spyOn(context.server.ws, 'send');
 
-        const time = freezeTime();
-
         plugin.handleHotUpdate(context);
 
         expect(spy).toHaveBeenCalledTimes(0);
