@@ -67,6 +67,10 @@ From now on, when a `.blade.php` or Livewire `.php` class is updated, the hot re
 [vite] livewire hot updated.
 ```
 
+> **Warning**
+> This Vite plugin, as Livewire needs to persist in page, is not fully compatible with other plugins that full refresh the page when a `.blade.php` file changes (i.e. laravel/vite-plugin with blade option active)
+> in order to make them work together, `blade` files in `**/livewire/**` should be excluded from blade hot reload.
+
 ### Watching files for hot reload trigger
 
 by default `livewire()` plugin will trigger hot reload when a `.blade.php` file changes in `resources/views/**` folders or a  `.php` file changes in `app/**/Livewire/**` folders.
@@ -100,10 +104,6 @@ export default defineConfig({
 In some cases (i.e. when working on non-livewire elements), you'll want to full reload he page when a blade file is changed.
 
 By adding an `VITE_LIVEWIRE_OPT_IN=true` entry in your `.env` file an opt-in checkbox will show on the bottom right corner of the webpage, allowing you to enable/disable livewire hot reload. If disabled: a full page reload will be triggered when blade files are changed.
-
-> **Warning**
-> This Vite plugin, as Livewire needs to persist in page, is not fully compatible with other plugins that full refresh the page when a `.blade.php` file changes (i.e. laravel/vite-plugin with blade option active)
-> in order to make them work together, `blade` files in `**/livewire/**` should be excluded from blade hot reload.
 
 ## Changelog
 
