@@ -10,7 +10,6 @@ This plugin (made by [def:studio](https://twitter.com/FabioIvona)) configures Vi
 
 Demo video available [below](#demo) in this page
 
-
 ## Installation
 
 ```bash
@@ -36,9 +35,9 @@ export default defineConfig({
             'resources/js/app.js',
         ]),
         
-       livewire({  // <-- add livewire plugin
-           refresh: ['resources/css/app.css'],
-       }),
+        livewire({  // <-- add livewire plugin
+            refresh: ['resources/css/app.css'],  // <-- will refresh css (tailwind ) as well
+        }),
     ],
 });
 ```
@@ -48,7 +47,8 @@ and add the livewire hot reload manager in your `app.js` file:
 ```js
 //..
 
-import { livewire_hot_reload } from 'virtual:livewire-hot-reload'
+import {livewire_hot_reload} from 'virtual:livewire-hot-reload'
+
 livewire_hot_reload();
 ```
 
@@ -76,23 +76,21 @@ if you wish to change this behavior (because you have livewire files in other lo
 ```js
 // vite.config.js 
 
+import livewire, {defaultWatches} from '@defstudio/vite-livewire-plugin';
+
 export default defineConfig({
     //...
     
     plugins: [
-        laravel([
-            'resources/css/app.css',
-            'resources/js/app.js',
-        ]),
+        //...
         
-       livewire({
-           refresh: ['resources/css/app.css'],
-           watch: [
-               '**/resources/views/**/*.blade.php',
-               '**/app/**/Livewire/**/*.php',
-               '**/domains/**/Livewire/**/*.php',
-           ]
-       }),
+        livewire({
+            refresh: ['resources/css/app.css'],
+            watch: [
+                ...defaultWatches,
+                '**/domains/**/Livewire/**/*.php',
+            ]
+        }),
     ],
 });
 ```
@@ -103,12 +101,9 @@ In some cases (i.e. when working on non-livewire elements), you'll want to full 
 
 By adding an `VITE_LIVEWIRE_OPT_IN=true` entry in your `.env` file an opt-in checkbox will show on the bottom right corner of the webpage, allowing you to enable/disable livewire hot reload. If disabled: a full page reload will be triggered when blade files are changed.
 
-## Warning
-
-This Vite plugin, as Livewire neets to persist in page, is not fully compatible with other plugins that full refresh the page when a `.blade.php` file changes (i.e. laravel/vite-plugin with blade option active)
-
-in order to make them work together, `blade` files in `**/livewire/**` shoud be excluded from blade hot reload.
-
+> **Warning**
+> This Vite plugin, as Livewire needs to persist in page, is not fully compatible with other plugins that full refresh the page when a `.blade.php` file changes (i.e. laravel/vite-plugin with blade option active)
+> in order to make them work together, `blade` files in `**/livewire/**` should be excluded from blade hot reload.
 
 ## Changelog
 
@@ -130,9 +125,6 @@ Please review [our security policy](../../security/policy) on how to report secu
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-
-
 
 ## Demo
 
