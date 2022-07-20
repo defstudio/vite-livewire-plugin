@@ -1,6 +1,6 @@
 {
     "name": "@defstudio/vite-livewire-plugin",
-    "version": "0.1.15",
+    "version": "1.0.0",
     "author": {
         "name": "Fabio Ivona"
     },
@@ -40,7 +40,7 @@
         "vitest": "^0.18.0"
     },
     "peerDependencies": {
-        "vite": "^2.9.9"
+        "vite": "^3.0.0"
     },
     "engines": {
         "node": ">=14"
