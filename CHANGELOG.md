@@ -2,6 +2,19 @@
 
 All notable changes to `vite-livewire-plugin` will be documented in this file.
 
+## 0.2.1 - 2022-08-02
+
+### What's Changed
+
+- downgrade vite version to v2.x due to v3 forcing full refresh on blade changes
+- 
+- Bump vitest from 0.18.1 to 0.19.0 by @dependabot in https://github.com/def-studio/vite-livewire-plugin/pull/10
+- 
+- Bump vitest from 0.19.1 to 0.20.2 by @dependabot in https://github.com/def-studio/vite-livewire-plugin/pull/13
+- 
+
+**Full Changelog**: https://github.com/def-studio/vite-livewire-plugin/compare/0.2.0...0.2.1
+
 ## 0.2.0 - 2022-07-20
 
 ### What's Changed
