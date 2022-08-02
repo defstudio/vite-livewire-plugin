@@ -1,5 +1,9 @@
 # Vite Livewire Plugin
 
+> **Warning**
+> V3 of Vitejs introduced a forced full reload when a tailwindcss change is triggered by a change in a blade file. This prevents our plugin for applying Livewire Hot Reload. We are actively working with the Vite team to solve this issue
+
+
 <a href="https://www.npmjs.com/package/@defstudio/vite-livewire-plugin"><img src="https://img.shields.io/npm/dt/@defstudio/vite-livewire-plugin" alt="Total Downloads"></a>
 <a href="https://www.npmjs.com/package/@defstudio/vite-livewire-plugin"><img src="https://img.shields.io/npm/v/@defstudio/vite-livewire-plugin" alt="Latest Stable Version"></a>
 <a href="https://www.npmjs.com/package/@defstudio/vite-livewire-plugin"><img src="https://img.shields.io/npm/l/@defstudio/vite-livewire-plugin" alt="License"></a>
