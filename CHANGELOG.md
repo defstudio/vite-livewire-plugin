@@ -2,6 +2,12 @@
 
 All notable changes to `vite-livewire-plugin` will be documented in this file.
 
+## 0.2.2 - 2022-08-03
+
+- Fix conflict with Vite refreshing the page when tailwind updates css
+
+**Full Changelog**: https://github.com/def-studio/vite-livewire-plugin/compare/0.2.1...0.2.2
+
 ## 0.2.1 - 2022-08-02
 
 ### What's Changed
