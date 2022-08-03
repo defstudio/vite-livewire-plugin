@@ -157,7 +157,7 @@ export default function livewire(config?: PluginConfig | string | string[]): Liv
                         checkbox.type = 'checkbox';
                         checkbox.style.cssText = "width: 12px; height: 12px; cursor: pointer";
                         checkbox.id = "livewire_hot_reload";
-                        checkbox.checked = sessionStorage.getItem("livewire_hot_reload") === "1";
+                        checkbox.checked = (sessionStorage.getItem("livewire_hot_reload") ?? "1") === "1";
 
                         sessionStorage.setItem("livewire_hot_reload", checkbox.checked ? "1" : "0");
                         console.log("[vite] livewire hot reload " + (checkbox.checked ? "enabled." : "disabled."));
@@ -237,9 +237,14 @@ export default function livewire(config?: PluginConfig | string | string[]): Liv
             }
         },
         handleHotUpdate(ctx) {
+            if (minimatch(ctx.file, '**/storage/framework/views/**/*.php')) {
+                return [];
+            }
+
             for (const pattern of pluginConfig.watch) {
                 if (minimatch(ctx.file, pattern)) {
                     refresh(ctx, pluginConfig)
+                    return [];
                 }
             }
         }

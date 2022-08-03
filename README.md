@@ -1,10 +1,5 @@
 # Vite Livewire Plugin
 
-> **Warning**
-> V3 of Vitejs introduced a forced full reload when a tailwindcss change is triggered by a change in a blade file. This prevents our plugin for applying Livewire Hot Reload. We are actively working with the Vite team to solve this issue (see vitejs/vite#9512 for more info)
-
-
-
 <a href="https://www.npmjs.com/package/@defstudio/vite-livewire-plugin"><img src="https://img.shields.io/npm/dt/@defstudio/vite-livewire-plugin" alt="Total Downloads"></a>
 <a href="https://www.npmjs.com/package/@defstudio/vite-livewire-plugin"><img src="https://img.shields.io/npm/v/@defstudio/vite-livewire-plugin" alt="Latest Stable Version"></a>
 <a href="https://www.npmjs.com/package/@defstudio/vite-livewire-plugin"><img src="https://img.shields.io/npm/l/@defstudio/vite-livewire-plugin" alt="License"></a>
@@ -73,8 +68,23 @@ From now on, when a `.blade.php` or Livewire `.php` class is updated, the hot re
 ```
 
 > **Warning**
-> This Vite plugin, as Livewire needs to persist in page, is not fully compatible with other plugins that full refresh the page when a `.blade.php` file changes (i.e. laravel/vite-plugin with blade option active)
-> in order to make them work together, `blade` files in `**/livewire/**` should be excluded from blade hot reload.
+> This Vite plugin, as Livewire needs to persist in page, is not fully compatible with other plugins that full refresh the page when a `.blade.php` file changes (i.e. laravel/vite-plugin with refresh option active)
+> in order to make them work together, `blade` files in `**/livewire/**` should be excluded from blade hot reload. For Laravel Vite plugin, this config would solve the issue:
+ 
+```js
+// vite.config.js
+export default defineConfig({
+//...
+    plugins: [
+        //...
+    
+        laravel({
+            // ...
+            refresh: false,
+        })
+    ],
+});
+```
 
 ### Watching files for hot reload trigger
 
