@@ -88,9 +88,9 @@ export default defineConfig({
 
 ### Watching files for hot reload trigger
 
-by default `livewire()` plugin will trigger hot reload when a `.blade.php` file changes in `resources/views/**` folders or a  `.php` file changes in `app/**/Livewire/**` folders.
+by default `livewire()` plugin will trigger hot reload when a `.blade.php` file changes in `resources/views/**` folders or a  `.php` file changes in `app/**/Livewire/**`, `app/**/Filament/**` or `app/View/Components/**` folders.
 
-if you wish to change this behavior (because you have livewire files in other locations), this can be achieved using the `watch` config:
+if you wish to add/change this behavior (because you have livewire files in other locations), this can be achieved using the `watch` config:
 
 ```js
 // vite.config.js 
