@@ -2,6 +2,18 @@
 
 All notable changes to `vite-livewire-plugin` will be documented in this file.
 
+## 0.2.3 - 2022-08-04
+
+### What's Changed
+
+- [feat] add filament folder to default watches by @ariaieboy in https://github.com/def-studio/vite-livewire-plugin/pull/15
+
+### New Contributors
+
+- @ariaieboy made their first contribution in https://github.com/def-studio/vite-livewire-plugin/pull/15
+
+**Full Changelog**: https://github.com/def-studio/vite-livewire-plugin/compare/0.2.2...0.2.3
+
 ## 0.2.2 - 2022-08-03
 
 - Fix conflict with Vite refreshing the page when tailwind updates css
