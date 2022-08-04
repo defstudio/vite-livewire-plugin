@@ -108,7 +108,6 @@ export default function livewire(config?: PluginConfig | string | string[]): Liv
     // this const is left for backward compatibility with
     // previous setups.
     const typoVirtualModuleId = 'virtual:tailwind-hot-reload'
-    const shortVirtualModuleId = 'livewire-hot-reload'
 
     const virtualModuleId = 'virtual:livewire-hot-reload'
     const resolvedVirtualModuleId = '\0' + virtualModuleId
@@ -119,7 +118,7 @@ export default function livewire(config?: PluginConfig | string | string[]): Liv
         name: 'Tailwind Plugin',
         pluginConfig: pluginConfig,
         resolveId(id) {
-            if (id === virtualModuleId || id === typoVirtualModuleId || id === shortVirtualModuleId) {
+            if (id === virtualModuleId || id === typoVirtualModuleId) {
                 return resolvedVirtualModuleId
             }
         },
@@ -172,9 +171,10 @@ export default function livewire(config?: PluginConfig | string | string[]): Liv
                             }
                             if (eventTarget instanceof HTMLInputElement) {
                                 sessionStorage.setItem("livewire_hot_reload", eventTarget.checked ? "1" : "0");
+                                console.log("[vite] livewire hot reload " + (eventTarget.checked ? "enabled." : "disabled."));
                             }
 
-                            console.log("[vite] livewire hot reload " + (eventTarget.checked ? "enabled." : "disabled."));
+
                         });
 
                         return checkbox;
