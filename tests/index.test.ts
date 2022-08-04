@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// noinspection JSUnusedLocalSymbols
+
 import {afterEach, describe, expect, it, vi} from "vitest";
 import livewire, {defaultWatches} from "../src";
 import {HmrContext, HMRPayload, ViteDevServer} from "vite";
@@ -11,6 +14,7 @@ function fakeContext(file = ''): HmrContext {
         },
         server: {
             ws: {
+
                 send: (payload: HMRPayload) => {
                     //.. do nothing
                 }
@@ -36,6 +40,7 @@ describe('configuration parse', () => {
             '**/resources/views/**/*.blade.php',
             '**/app/**/Livewire/**/*.php',
             '**/app/**/Filament/**/*.php',
+            'app/View/Components/**',
         ]);
     });
 
@@ -64,6 +69,7 @@ describe('configuration parse', () => {
             '**/resources/views/**/*.blade.php',
             '**/app/**/Livewire/**/*.php',
             '**/app/**/Filament/**/*.php',
+            'app/View/Components/**',
         ]);
     });
 
@@ -92,6 +98,7 @@ describe('configuration parse', () => {
             '**/resources/views/**/*.blade.php',
             '**/app/**/Livewire/**/*.php',
             '**/app/**/Filament/**/*.php',
+            'app/View/Components/**',
         ]);
     });
 
@@ -104,6 +111,7 @@ describe('configuration parse', () => {
             '**/resources/views/**/*.blade.php',
             '**/app/**/Livewire/**/*.php',
             '**/app/**/Filament/**/*.php',
+            'app/View/Components/**',
         ]);
     });
 });
@@ -116,7 +124,7 @@ describe('hot update handling', () => {
     it("should not trigger hot update if file doesn't match any pattern", function () {
         const plugin = livewire();
 
-        plugin.handleHotUpdate(fakeContext());
+        plugin.handleHotUpdate?.(fakeContext());
     });
 
     it("should trigger hot update if file matches default class pattern", function () {
@@ -125,7 +133,7 @@ describe('hot update handling', () => {
         const context = fakeContext('/var/www/app/Html/Livewire/Test.php');
         const spy = vi.spyOn(context.server.ws, 'send');
 
-        plugin.handleHotUpdate(context);
+        plugin.handleHotUpdate?.(context);
 
         expect(spy).toHaveBeenCalledWith({
             type: 'custom',
@@ -142,11 +150,11 @@ describe('hot update handling', () => {
         const context = fakeContext('/var/www/app/Html/Livewire/Test.php');
         const spy = vi.spyOn(context.server.ws, 'send');
 
-        plugin.handleHotUpdate(context);
+        plugin.handleHotUpdate?.(context);
         expect(spy).toHaveBeenCalledTimes(0);
 
         context.file = 'var/www/app/modules/invoices/views/livewire/test.blade.php';
-        plugin.handleHotUpdate(context);
+        plugin.handleHotUpdate?.(context);
         expect(spy).toHaveBeenCalledTimes(1);
     });
 
@@ -161,7 +169,7 @@ describe('hot update handling', () => {
         const context = fakeContext('/var/www/app/Html/Livewire/Test.php');
         const spy = vi.spyOn(context.server.ws, 'send');
 
-        plugin.handleHotUpdate(context);
+        plugin.handleHotUpdate?.(context);
         expect(spy).toHaveBeenCalledWith({
             type: 'custom',
             event: 'livewire-update',
@@ -169,7 +177,7 @@ describe('hot update handling', () => {
         });
 
         context.file = 'var/www/app/modules/invoices/views/livewire/test.blade.php';
-        plugin.handleHotUpdate(context);
+        plugin.handleHotUpdate?.(context);
         expect(spy).toHaveBeenCalledTimes(2);
         expect(spy).toHaveBeenLastCalledWith({
             type: 'custom',
@@ -184,7 +192,7 @@ describe('hot update handling', () => {
         const context = fakeContext('/var/www/resources/views/test.blade.php');
         const spy = vi.spyOn(context.server.ws, 'send');
 
-        plugin.handleHotUpdate(context);
+        plugin.handleHotUpdate?.(context);
 
         expect(spy).toHaveBeenCalledTimes(1);
     });
@@ -197,7 +205,7 @@ describe('hot update handling', () => {
         const context = fakeContext('/var/www/resources/components/test.blade.php');
         const spy = vi.spyOn(context.server.ws, 'send');
 
-        plugin.handleHotUpdate(context);
+        plugin.handleHotUpdate?.(context);
 
         expect(spy).toHaveBeenCalledTimes(0);
     });
@@ -212,7 +220,7 @@ describe('hot update handling', () => {
 
         const time = freezeTime();
 
-        plugin.handleHotUpdate(context);
+        plugin.handleHotUpdate?.(context);
 
         expect(spy).toHaveBeenCalledTimes(2);
 
