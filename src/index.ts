@@ -20,7 +20,8 @@ interface LivewirePlugin extends Plugin {
 export const defaultWatches: string[] = [
     '**/resources/views/**/*.blade.php',
     '**/app/**/Livewire/**/*.php',
-    '**/app/**/Filament/**/*.php'
+    '**/app/**/Filament/**/*.php',
+    'app/View/Components/**',
 ];
 
 export const defaultConfig: PluginConfig = {
