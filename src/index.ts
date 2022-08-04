@@ -8,7 +8,7 @@ interface PluginConfig {
     watch?: string | string[];
 }
 
-interface ResolvedPluginConfig extends PluginConfig{
+interface ResolvedPluginConfig extends PluginConfig {
     refresh: string[];
     watch: string[];
 }
@@ -29,31 +29,31 @@ export const defaultConfig: PluginConfig = {
 }
 
 function triggerUpdates(ctx: HmrContext, refreshList: string[]): void {
-        const updates = [];
-        for (const path of refreshList) {
-            let type;
-            if (path.endsWith('css')) {
-                type = 'css-update';
-            } else if (path.endsWith('js')) {
-                type = 'js-update';
-            } else {
-                continue;
-            }
-
-            updates.push({
-                type: type,
-                path: path,
-                acceptedPath: path,
-                timestamp: (new Date).getTime(),
-            } as Update)
+    const updates = [];
+    for (const path of refreshList) {
+        let type;
+        if (path.endsWith('css')) {
+            type = 'css-update';
+        } else if (path.endsWith('js')) {
+            type = 'js-update';
+        } else {
+            continue;
         }
 
-        if(updates.length>0){
-            ctx.server.ws.send({
-                type: 'update',
-                updates: updates,
-            });
-        }
+        updates.push({
+            type: type,
+            path: path,
+            acceptedPath: path,
+            timestamp: (new Date).getTime(),
+        } as Update)
+    }
+
+    if (updates.length > 0) {
+        ctx.server.ws.send({
+            type: 'update',
+            updates: updates,
+        });
+    }
 }
 
 function refresh(ctx: HmrContext, config: ResolvedPluginConfig): void {
@@ -73,17 +73,17 @@ function resolvePluginConfig(config?: PluginConfig | string | string[]): Resolve
         config = defaultConfig;
     }
 
-    if(typeof config === 'string'){
+    if (typeof config === 'string') {
         config = [config];
     }
 
-    if(Array.isArray(config)){
+    if (Array.isArray(config)) {
         const watch = config;
         config = {...defaultConfig};
         config.watch = watch;
     }
 
-    if(typeof config.refresh === 'undefined'){
+    if (typeof config.refresh === 'undefined') {
         config.refresh = defaultConfig.refresh;
     }
 
@@ -107,6 +107,7 @@ export default function livewire(config?: PluginConfig | string | string[]): Liv
     // this const is left for backward compatibility with
     // previous setups.
     const typoVirtualModuleId = 'virtual:tailwind-hot-reload'
+    const shortVirtualModuleId = 'livewire-hot-reload'
 
     const virtualModuleId = 'virtual:livewire-hot-reload'
     const resolvedVirtualModuleId = '\0' + virtualModuleId
@@ -117,43 +118,43 @@ export default function livewire(config?: PluginConfig | string | string[]): Liv
         name: 'Tailwind Plugin',
         pluginConfig: pluginConfig,
         resolveId(id) {
-            if (id === virtualModuleId || id === typoVirtualModuleId) {
+            if (id === virtualModuleId || id === typoVirtualModuleId || id === shortVirtualModuleId) {
                 return resolvedVirtualModuleId
             }
         },
         load(id) {
             if (id === resolvedVirtualModuleId) {
+
+                //language=javascript ← automatic language injection for phpstorm
                 return `
                     let lastLivewireUpdate = 0;
 
-                    function initConflictingReloadCheck()
-                    {
-                          window.onload = function() {
-                              if( sessionStorage.getItem("livewire_hot_reload_conflict") === '1'){
-                                  console.error("" +
-                                   "[vite] Another Vite plugin reloaded the page whilst " +
+                    function initConflictingReloadCheck() {
+                        window.onload = function () {
+                            if (sessionStorage.getItem("livewire_hot_reload_conflict") === '1') {
+                                console.error("" +
+                                    "[vite] Another Vite plugin reloaded the page whilst " +
                                     "defstudio/vite-livewire-plugin was refreshing a Livewire component. " +
-                                     "For optimal results, disable full page reloads when " +
-                                      "defstudio/vite-livewire-plugin is enabled. " +
-                                       "For more info, visit out docs: https://github.com/def-studio/vite-livewire-plugin");
-                              }
+                                    "For optimal results, disable full page reloads when " +
+                                    "defstudio/vite-livewire-plugin is enabled. " +
+                                    "For more info, visit out docs: https://github.com/def-studio/vite-livewire-plugin");
+                            }
 
-                              sessionStorage.setItem("livewire_hot_reload_conflict", '0');
+                            sessionStorage.setItem("livewire_hot_reload_conflict", '0');
 
-                              window.addEventListener("beforeunload", () => {
+                            window.addEventListener("beforeunload", () => {
                                 const now = (new Date()).getTime();
 
-                                if(now - lastLivewireUpdate > 200){
+                                if (now - lastLivewireUpdate > 200) {
                                     return;
                                 }
 
                                 sessionStorage.setItem("livewire_hot_reload_conflict", '1');
                             });
-                          };
+                        };
                     }
 
-                    function makeOptInCheckbox()
-                    {
+                    function makeOptInCheckbox() {
                         const checkbox = document.createElement('input');
                         checkbox.type = 'checkbox';
                         checkbox.style.cssText = "width: 12px; height: 12px; cursor: pointer";
@@ -172,14 +173,13 @@ export default function livewire(config?: PluginConfig | string | string[]): Liv
                                 sessionStorage.setItem("livewire_hot_reload", eventTarget.checked ? "1" : "0");
                             }
 
-                             console.log("[vite] livewire hot reload " + (eventTarget.checked ? "enabled." : "disabled."));
+                            console.log("[vite] livewire hot reload " + (eventTarget.checked ? "enabled." : "disabled."));
                         });
 
                         return checkbox;
                     }
 
-                    function makeOptInLabel()
-                    {
+                    function makeOptInLabel() {
                         const label = document.createElement('label');
                         label.style.cssText = "position: fixed; bottom: 10px; right: 10px; font-size: 12px; cursor: pointer";
                         label.innerHTML += "Livewire Hot Reload&nbsp;";
@@ -187,11 +187,10 @@ export default function livewire(config?: PluginConfig | string | string[]): Liv
                         return label;
                     }
 
-                    function injectOptInCheckbox()
-                    {
-                       const label = makeOptInLabel();
-                       label.append(makeOptInCheckbox());
-                       window.document.body.insertBefore(label, window.document.body.lastChild);
+                    function injectOptInCheckbox() {
+                        const label = makeOptInLabel();
+                        label.append(makeOptInCheckbox());
+                        window.document.body.insertBefore(label, window.document.body.lastChild);
                     }
 
                     export function livewire_hot_reload() {
@@ -199,10 +198,10 @@ export default function livewire(config?: PluginConfig | string | string[]): Liv
                         if (import.meta.hot) {
                             initConflictingReloadCheck();
 
-                            if(import.meta.env.VITE_LIVEWIRE_OPT_IN){
+                            if (import.meta.env.VITE_LIVEWIRE_OPT_IN) {
                                 injectOptInCheckbox();
-                            }else{
-                                 console.log("[vite] livewire hot reload enabled.");
+                            } else {
+                                console.log("[vite] livewire hot reload enabled.");
                             }
 
                             import.meta.hot.on('livewire-update', data => {
@@ -214,7 +213,7 @@ export default function livewire(config?: PluginConfig | string | string[]): Liv
                                 const checkbox = window.document.getElementById("livewire_hot_reload");
 
                                 if (checkbox && !checkbox.checked) {
-                                    if(!data.blade_updated){
+                                    if (!data.blade_updated) {
                                         return;
                                     }
 
@@ -234,7 +233,7 @@ export default function livewire(config?: PluginConfig | string | string[]): Liv
                             });
                         }
                     }
-                `
+                `;
             }
         },
         handleHotUpdate(ctx) {
