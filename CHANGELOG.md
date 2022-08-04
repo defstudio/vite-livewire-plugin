@@ -2,6 +2,14 @@
 
 All notable changes to `vite-livewire-plugin` will be documented in this file.
 
+## 0.2.4 - 2022-08-04
+
+### What's Changed
+
+- [Feat] Blade components classes watch by @fabio-ivona in https://github.com/def-studio/vite-livewire-plugin/pull/16
+
+**Full Changelog**: https://github.com/def-studio/vite-livewire-plugin/compare/0.2.3...0.2.4
+
 ## 0.2.3 - 2022-08-04
 
 ### What's Changed
