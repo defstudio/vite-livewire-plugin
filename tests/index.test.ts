@@ -1,17 +1,18 @@
 import {afterEach, describe, expect, it, vi} from "vitest";
 import livewire, {defaultWatches} from "../src";
-import {HmrContext, ViteDevServer} from "vite";
+import {HmrContext, HMRPayload, ViteDevServer} from "vite";
 
-function fakeContext(file: string = ''): HmrContext {
+function fakeContext(file = ''): HmrContext {
     return {
         file: file,
-        modules: undefined,
+        modules: [],
         read(): string | Promise<string> {
-            return undefined;
+            return '';
         },
         server: {
             ws: {
-                send: payload => {
+                send: (payload: HMRPayload) => {
+                    //.. do nothing
                 }
             }
         } as ViteDevServer,
