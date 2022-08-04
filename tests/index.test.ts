@@ -34,6 +34,7 @@ describe('configuration parse', () => {
         expect(config.watch).toStrictEqual([
             '**/resources/views/**/*.blade.php',
             '**/app/**/Livewire/**/*.php',
+            '**/app/**/Filament/**/*.php',
         ]);
     });
 
@@ -61,6 +62,7 @@ describe('configuration parse', () => {
         expect(config.watch).toStrictEqual([
             '**/resources/views/**/*.blade.php',
             '**/app/**/Livewire/**/*.php',
+            '**/app/**/Filament/**/*.php',
         ]);
     });
 
@@ -88,6 +90,7 @@ describe('configuration parse', () => {
         expect(config.watch).toStrictEqual([
             '**/resources/views/**/*.blade.php',
             '**/app/**/Livewire/**/*.php',
+            '**/app/**/Filament/**/*.php',
         ]);
     });
 
@@ -99,6 +102,7 @@ describe('configuration parse', () => {
         expect(config.watch).toStrictEqual([
             '**/resources/views/**/*.blade.php',
             '**/app/**/Livewire/**/*.php',
+            '**/app/**/Filament/**/*.php',
         ]);
     });
 });
