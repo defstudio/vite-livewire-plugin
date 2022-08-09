@@ -116,7 +116,7 @@ export default defineConfig({
 
 ### Opt in hot reload
 
-In some cases (i.e. when working on non-livewire elements), you'll want to full reload he page when a blade file is changed.
+In some cases (i.e. when working on non-livewire elements), you'll want to full reload the page when a blade file is changed.
 
 By adding an `VITE_LIVEWIRE_OPT_IN=true` entry in your `.env` file an opt-in checkbox will show on the bottom right corner of the webpage, allowing you to enable/disable livewire hot reload. If disabled: a full page reload will be triggered when blade files are changed.
 
