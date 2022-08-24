@@ -1,4 +1,4 @@
-import {HmrContext, Plugin} from "vite";
+import {HmrContext, ModuleNode, Plugin} from "vite";
 import {Update} from "vite/types/hmrPayload";
 
 import minimatch from 'minimatch';
@@ -58,8 +58,6 @@ function triggerUpdates(ctx: HmrContext, refreshList: string[]): void {
 }
 
 function refresh(ctx: HmrContext, config: ResolvedPluginConfig): void {
-    triggerUpdates(ctx, config.refresh);
-
     ctx.server.ws.send({
         type: 'custom',
         event: 'livewire-update',
@@ -190,6 +188,7 @@ export default function livewire(config?: PluginConfig | string | string[]): Liv
 
                     function injectOptInCheckbox() {
                         const label = makeOptInLabel();
+                        // noinspection JSCheckFunctionSignatures
                         label.append(makeOptInCheckbox());
                         window.document.body.insertBefore(label, window.document.body.lastChild);
                     }
@@ -206,6 +205,7 @@ export default function livewire(config?: PluginConfig | string | string[]): Liv
                             }
 
                             import.meta.hot.on('livewire-update', data => {
+                                // noinspection JSUnresolvedVariable
                                 if (typeof Livewire === "undefined" || Object.keys(Livewire.components).length === 0) {
                                     console.log("[vite] full reload...");
                                     location.reload();
@@ -238,14 +238,39 @@ export default function livewire(config?: PluginConfig | string | string[]): Liv
             }
         },
         handleHotUpdate(ctx) {
+
             if (minimatch(ctx.file, '**/storage/framework/views/**/*.php')) {
                 return [];
             }
 
             for (const pattern of pluginConfig.watch) {
                 if (minimatch(ctx.file, pattern)) {
+
+                    //Fix unwanted full reloads
+                    if (ctx.modules[0]?.importers && ctx.modules[0].importers.size === 1) {
+                        const dummyModule = {...ctx.modules[0]};
+                        dummyModule.importers = new Set;
+                        dummyModule.isSelfAccepting = true;
+                        ctx.modules[0].importers.add(dummyModule);
+                    }
+
+
+                    const refreshList = [...pluginConfig.refresh.filter(path => {
+                        if(ctx.modules.length === 0 || !ctx.modules[0]){
+                            return true
+                        }
+
+
+                        let includeInRefresh = true;
+                        ctx.modules[0].importers.forEach(importer => {
+                            includeInRefresh = importer.file?.endsWith(path) ?? false;
+                        });
+                        return includeInRefresh;
+                    })];
+
+                    triggerUpdates(ctx, refreshList);
+
                     refresh(ctx, pluginConfig)
-                    return [];
                 }
             }
         }
