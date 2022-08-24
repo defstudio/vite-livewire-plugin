@@ -2,6 +2,21 @@
 
 All notable changes to `vite-livewire-plugin` will be documented in this file.
 
+## 0.2.5 - 2022-08-24
+
+### What's Changed
+
+- [fix] tailwind not updating by @fabio-ivona in https://github.com/def-studio/vite-livewire-plugin/pull/22
+- Bump vitest from 0.20.3 to 0.21.0 by @dependabot in https://github.com/def-studio/vite-livewire-plugin/pull/17
+- Fix the typo by @trippo in https://github.com/def-studio/vite-livewire-plugin/pull/18
+- Bump vitest from 0.21.1 to 0.22.0 by @dependabot in https://github.com/def-studio/vite-livewire-plugin/pull/19
+
+### New Contributors
+
+- @trippo made their first contribution in https://github.com/def-studio/vite-livewire-plugin/pull/18
+
+**Full Changelog**: https://github.com/def-studio/vite-livewire-plugin/compare/0.2.4...0.2.5
+
 ## 0.2.4 - 2022-08-04
 
 ### What's Changed
