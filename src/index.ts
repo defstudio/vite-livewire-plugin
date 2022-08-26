@@ -260,7 +260,7 @@ export default function livewire(config?: PluginConfig | string | string[]): Liv
                     triggerUpdates(ctx, refreshList);
                     refresh(ctx, pluginConfig)
 
-                    return [...ctx.modules[0].importers, ...ctx.modules.slice(1)];
+                    return [...ctx.modules[0]?.importers ?? [], ...ctx.modules.slice(1)];
                 }
             }
         }
