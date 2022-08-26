@@ -2,6 +2,15 @@
 
 All notable changes to `vite-livewire-plugin` will be documented in this file.
 
+## 0.2.6 - 2022-08-26
+
+### What's Changed
+
+- Bump @types/minimatch from 3.0.5 to 5.1.0 by @dependabot in https://github.com/def-studio/vite-livewire-plugin/pull/23
+- [chore] refactor tailwind update code by @fabio-ivona in https://github.com/def-studio/vite-livewire-plugin/pull/24
+
+**Full Changelog**: https://github.com/def-studio/vite-livewire-plugin/compare/0.2.5...0.2.6
+
 ## 0.2.5 - 2022-08-24
 
 ### What's Changed
