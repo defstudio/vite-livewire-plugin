@@ -245,32 +245,22 @@ export default function livewire(config?: PluginConfig | string | string[]): Liv
 
             for (const pattern of pluginConfig.watch) {
                 if (minimatch(ctx.file, pattern)) {
-
-                    //Fix unwanted full reloads
-                    if (ctx.modules[0]?.importers && ctx.modules[0].importers.size === 1) {
-                        const dummyModule = {...ctx.modules[0]};
-                        dummyModule.importers = new Set;
-                        dummyModule.isSelfAccepting = true;
-                        ctx.modules[0].importers.add(dummyModule);
-                    }
-
-
                     const refreshList = [...pluginConfig.refresh.filter(path => {
                         if(ctx.modules.length === 0 || !ctx.modules[0]){
                             return true
                         }
 
-
                         let includeInRefresh = true;
                         ctx.modules[0].importers.forEach(importer => {
-                            includeInRefresh = importer.file?.endsWith(path) ?? false;
+                            includeInRefresh = !importer.file?.endsWith(path) ?? false;
                         });
                         return includeInRefresh;
                     })];
 
                     triggerUpdates(ctx, refreshList);
-
                     refresh(ctx, pluginConfig)
+
+                    return [...ctx.modules[0]?.importers ?? [], ...ctx.modules.slice(1)];
                 }
             }
         }
