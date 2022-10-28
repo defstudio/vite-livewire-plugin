@@ -32,6 +32,7 @@
     "devDependencies": {
         "@types/minimatch": "^5.1.0",
         "@types/node": "^18.0.0",
+        "@types/picomatch": "^2.3.0",
         "@typescript-eslint/eslint-plugin": "^5.21.0",
         "@typescript-eslint/parser": "^5.21.0",
         "eslint": "^8.14.0",
