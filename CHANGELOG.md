@@ -2,6 +2,10 @@
 
 All notable changes to `vite-livewire-plugin` will be documented in this file.
 
+## 1.0.1 - 2022-12-14
+
+**Full Changelog**: https://github.com/defstudio/vite-livewire-plugin/compare/1.0.0...1.0.1
+
 ## 1.0.0 - 2022-12-14
 
 ### What's Changed
