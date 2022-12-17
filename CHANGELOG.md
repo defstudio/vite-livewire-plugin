@@ -2,6 +2,18 @@
 
 All notable changes to `vite-livewire-plugin` will be documented in this file.
 
+## 1.0.2 - 2022-12-17
+
+### What's Changed
+
+- Bump peer dependency by @marispro in https://github.com/defstudio/vite-livewire-plugin/pull/32
+
+### New Contributors
+
+- @marispro made their first contribution in https://github.com/defstudio/vite-livewire-plugin/pull/32
+
+**Full Changelog**: https://github.com/defstudio/vite-livewire-plugin/compare/1.0.1...1.0.2
+
 ## 1.0.1 - 2022-12-14
 
 **Full Changelog**: https://github.com/defstudio/vite-livewire-plugin/compare/1.0.0...1.0.1
