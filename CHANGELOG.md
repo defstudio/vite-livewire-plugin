@@ -2,6 +2,16 @@
 
 All notable changes to `vite-livewire-plugin` will be documented in this file.
 
+## 1.0.4 - 2023-01-18
+
+### What's Changed
+
+- Bump vitest from 0.25.8 to 0.26.0 by @dependabot in https://github.com/defstudio/vite-livewire-plugin/pull/33
+- Bump vitest from 0.26.3 to 0.27.0 by @dependabot in https://github.com/defstudio/vite-livewire-plugin/pull/34
+- Bump minimatch from 5.1.6 to 6.1.5 by @dependabot in https://github.com/defstudio/vite-livewire-plugin/pull/36
+
+**Full Changelog**: https://github.com/defstudio/vite-livewire-plugin/compare/1.0.3...1.0.4
+
 ## 1.0.3 - 2022-12-17
 
 **Full Changelog**: https://github.com/defstudio/vite-livewire-plugin/compare/1.0.2...1.0.3
