@@ -42,6 +42,7 @@ describe('configuration parse', () => {
             '**/app/**/Filament/**/*.php',
             'app/View/Components/**',
         ]);
+        expect(config.bottomPosition).toStrictEqual(10);
     });
 
     it('should handle string configuration', function () {
@@ -50,6 +51,7 @@ describe('configuration parse', () => {
 
         expect(config.refresh).toStrictEqual([]);
         expect(config.watch).toStrictEqual(['foo']);
+        expect(config.bottomPosition).toStrictEqual(10);
     });
 
     it('should handle array configuration', function () {
@@ -58,6 +60,7 @@ describe('configuration parse', () => {
 
         expect(config.refresh).toStrictEqual([]);
         expect(config.watch).toStrictEqual(['foo', 'bar']);
+        expect(config.bottomPosition).toStrictEqual(10);
     });
 
     it('should handle empty object configuration', function () {
@@ -71,6 +74,7 @@ describe('configuration parse', () => {
             '**/app/**/Filament/**/*.php',
             'app/View/Components/**',
         ]);
+        expect(config.bottomPosition).toStrictEqual(10);
     });
 
     it('should handle object configuration with string watch', function () {
@@ -79,6 +83,7 @@ describe('configuration parse', () => {
 
         expect(config.refresh).toStrictEqual([]);
         expect(config.watch).toStrictEqual(['foo']);
+        expect(config.bottomPosition).toStrictEqual(10);
     });
 
     it('should handle object configuration with array watch', function () {
@@ -87,6 +92,7 @@ describe('configuration parse', () => {
 
         expect(config.refresh).toStrictEqual([]);
         expect(config.watch).toStrictEqual(['foo', 'bar']);
+        expect(config.bottomPosition).toStrictEqual(10);
     });
 
     it('should handle object configuration with string refresh', function () {
@@ -100,6 +106,7 @@ describe('configuration parse', () => {
             '**/app/**/Filament/**/*.php',
             'app/View/Components/**',
         ]);
+        expect(config.bottomPosition).toStrictEqual(10);
     });
 
     it('should handle object configuration with array refresh', function () {
@@ -113,6 +120,21 @@ describe('configuration parse', () => {
             '**/app/**/Filament/**/*.php',
             'app/View/Components/**',
         ]);
+        expect(config.bottomPosition).toStrictEqual(10);
+    });
+
+    it('should handle object configuration with number bottomPosition', function () {
+        const plugin = livewire({bottomPosition: 42})
+        const config = plugin.pluginConfig;
+
+        expect(config.refresh).toStrictEqual([]);
+        expect(config.watch).toStrictEqual([
+            '**/resources/views/**/*.blade.php',
+            '**/app/**/Livewire/**/*.php',
+            '**/app/**/Filament/**/*.php',
+            'app/View/Components/**',
+        ]);
+        expect(config.bottomPosition).toStrictEqual(42);
     });
 });
 
