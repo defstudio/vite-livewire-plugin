@@ -6,11 +6,13 @@ import minimatch from 'minimatch';
 interface PluginConfig {
     refresh?: string | string[];
     watch?: string | string[];
+    bottomPosition?: number;
 }
 
 interface ResolvedPluginConfig extends PluginConfig {
     refresh: string[];
     watch: string[];
+    bottomPosition: number;
 }
 
 interface LivewirePlugin extends Plugin {
@@ -27,6 +29,7 @@ export const defaultWatches: string[] = [
 export const defaultConfig: PluginConfig = {
     watch: defaultWatches,
     refresh: [],
+    bottomPosition: 10,
 }
 
 function triggerUpdates(ctx: HmrContext, refreshList: string[]): void {
@@ -96,6 +99,10 @@ function resolvePluginConfig(config?: PluginConfig | string | string[]): Resolve
 
     if (typeof config.watch === 'string') {
         config.watch = [config.watch];
+    }
+
+    if (typeof config.bottomPosition === 'undefined') {
+        config.bottomPosition = defaultConfig.bottomPosition;
     }
 
     return config as ResolvedPluginConfig;
@@ -179,8 +186,11 @@ export default function livewire(config?: PluginConfig | string | string[]): Liv
                     }
 
                     function makeOptInLabel() {
+                        const debugbarHeight = document.querySelector('.phpdebugbar, .clockwork-toolbar')?.offsetHeight ?? 0;
+                        const defaultBottomPosition = ${pluginConfig.bottomPosition};
+                        const calculatedBottomPosition = debugbarHeight + defaultBottomPosition
                         const label = document.createElement('label');
-                        label.style.cssText = "position: fixed; bottom: 10px; right: 10px; font-size: 12px; cursor: pointer";
+                        label.style.cssText = "position: fixed; bottom: "+calculatedBottomPosition+"px; right: 10px; font-size: 12px; cursor: pointer";
                         label.innerHTML += "Livewire Hot Reload&nbsp;";
 
                         return label;
