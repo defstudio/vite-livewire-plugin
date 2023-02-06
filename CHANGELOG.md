@@ -2,6 +2,19 @@
 
 All notable changes to `vite-livewire-plugin` will be documented in this file.
 
+## v1.0.5 - 2023-02-06
+
+### What's Changed
+
+- Bump vitest from 0.27.3 to 0.28.1 by @dependabot in https://github.com/defstudio/vite-livewire-plugin/pull/37
+- add support for debug toolbars for hot reload checkbox by @buddhaCode in https://github.com/defstudio/vite-livewire-plugin/pull/38
+
+### New Contributors
+
+- @buddhaCode made their first contribution in https://github.com/defstudio/vite-livewire-plugin/pull/38
+
+**Full Changelog**: https://github.com/defstudio/vite-livewire-plugin/compare/1.0.4...v1.0.5
+
 ## 1.0.4 - 2023-01-18
 
 ### What's Changed
