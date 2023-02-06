@@ -2,6 +2,14 @@
 
 All notable changes to `vite-livewire-plugin` will be documented in this file.
 
+## v1.0.7 - 2023-02-06
+
+### What's Changed
+
+- [dx] add telescope-toolbar support by @buddhaCode in https://github.com/defstudio/vite-livewire-plugin/pull/39
+
+**Full Changelog**: https://github.com/defstudio/vite-livewire-plugin/compare/v1.0.6...v1.0.7
+
 ## v1.0.6 - 2023-02-06
 
 **Full Changelog**: https://github.com/defstudio/vite-livewire-plugin/compare/v1.0.5...v1.0.6
