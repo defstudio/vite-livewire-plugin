@@ -186,7 +186,7 @@ export default function livewire(config?: PluginConfig | string | string[]): Liv
                     }
 
                     function makeOptInLabel() {
-                        const debugbarHeight = document.querySelector('.phpdebugbar, .clockwork-toolbar')?.offsetHeight ?? 0;
+                        const debugbarHeight = document.querySelector('.phpdebugbar, .clockwork-toolbar, .sf-toolbar')?.offsetHeight ?? 0;
                         const defaultBottomPosition = ${pluginConfig.bottomPosition};
                         const calculatedBottomPosition = debugbarHeight + defaultBottomPosition
                         const label = document.createElement('label');
