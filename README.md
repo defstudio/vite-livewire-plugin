@@ -120,7 +120,8 @@ In some cases (i.e. when working on non-livewire elements), you'll want to full 
 
 By adding an `VITE_LIVEWIRE_OPT_IN=true` entry in your `.env` file an opt-in checkbox will show on the bottom right corner of the webpage, allowing you to enable/disable livewire hot reload. If disabled: a full page reload will be triggered when blade files are changed.
 
-If you're using a debug toolbar other than [Debugbar for Laravel](https://github.com/barryvdh/laravel-debugbar) or [Clockwork](https://underground.works/clockwork/), the checkbox my interfere with it. There is a config option `bottomPosition` to add more spacing to the bottom, to make the checkbox visible again. The value must be a of type number. These two toolbar are taken into account, while positioning the checkbox. No special configuration is needed.
+If you're using a debug toolbar like [Debugbar for Laravel](https://github.com/barryvdh/laravel-debugbar), [Clockwork](https://underground.works/clockwork/) or [Laravel Telescope Toolbar](https://github.com/fruitcake/laravel-telescope-toolbar), these are taken into account, while positioning the checkbox. No special configuration is needed.
+There may be another (debug) toolbar or something else in your view interfere with the checkbox. Therefore, a config option `bottomPosition` is available to add more spacing to the bottom, to make the checkbox visible again. The value must be of type number and is considered to be pixels.
 
 ```js
 // vite.config.js 
