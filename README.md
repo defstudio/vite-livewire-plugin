@@ -5,7 +5,6 @@
 <a href="https://www.npmjs.com/package/@defstudio/vite-livewire-plugin"><img src="https://img.shields.io/npm/l/@defstudio/vite-livewire-plugin" alt="License"></a>
 <a href="https://twitter.com/FabioIvona?ref_src=twsrc%5Etfw"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/FabioIvona?label=Follow&style=social"></a>
 
-<a href="https://twitter.com/FabioIvona?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @FabioIvona</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 Vite has become Laravel's default frontend build tool.
 
