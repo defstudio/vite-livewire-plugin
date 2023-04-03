@@ -2,6 +2,17 @@
 
 All notable changes to `vite-livewire-plugin` will be documented in this file.
 
+## v1.1.0 - 2023-04-03
+
+### What's Changed
+
+- Bump minimatch from 6.2.0 to 7.0.0 by @dependabot in https://github.com/defstudio/vite-livewire-plugin/pull/40
+- Bump vitest from 0.28.5 to 0.29.1 by @dependabot in https://github.com/defstudio/vite-livewire-plugin/pull/41
+- Bump typescript from 4.9.5 to 5.0.3 by @dependabot in https://github.com/defstudio/vite-livewire-plugin/pull/43
+- Bump minimatch from 7.4.4 to 8.0.2 by @dependabot in https://github.com/defstudio/vite-livewire-plugin/pull/44
+
+**Full Changelog**: https://github.com/defstudio/vite-livewire-plugin/compare/v1.0.7...v1.1.0
+
 ## v1.0.7 - 2023-02-06
 
 ### What's Changed
