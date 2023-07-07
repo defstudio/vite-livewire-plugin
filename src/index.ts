@@ -1,4 +1,6 @@
-import {HmrContext, ModuleNode, Plugin} from "vite";
+// noinspection JSUnusedLocalSymbols
+
+import {HmrContext, Plugin} from "vite";
 import {Update} from "vite/types/hmrPayload";
 
 import minimatch from 'minimatch';
@@ -60,6 +62,7 @@ function triggerUpdates(ctx: HmrContext, refreshList: string[]): void {
     }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function refresh(ctx: HmrContext, config: ResolvedPluginConfig): void {
     ctx.server.ws.send({
         type: 'custom',
