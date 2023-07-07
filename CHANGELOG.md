@@ -2,6 +2,18 @@
 
 All notable changes to `vite-livewire-plugin` will be documented in this file.
 
+## v1.2.0 - 2023-07-07
+
+### What's Changed
+
+- Bump vitest from 0.29.8 to 0.30.1 by @dependabot in https://github.com/defstudio/vite-livewire-plugin/pull/47
+- Bump vitest from 0.30.1 to 0.31.0 by @dependabot in https://github.com/defstudio/vite-livewire-plugin/pull/48
+- Bump vitest from 0.31.4 to 0.32.0 by @dependabot in https://github.com/defstudio/vite-livewire-plugin/pull/52
+- Bump @types/node from 18.16.5 to 20.1.0 by @dependabot in https://github.com/defstudio/vite-livewire-plugin/pull/49
+- mjs and cjs versions by @fabio-ivona in https://github.com/defstudio/vite-livewire-plugin/pull/56
+
+**Full Changelog**: https://github.com/defstudio/vite-livewire-plugin/compare/v1.1.0...v1.2.0
+
 ## v1.1.0 - 2023-04-03
 
 ### What's Changed
