@@ -17,15 +17,23 @@
         "url": "https://github.com/def-studio/vite-livewire-plugin"
     },
     "license": "MIT",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/index.mjs",
+            "require": "./dist/index.cjs",
+            "types": "./dist/index.d.ts"
+        }
+    },
     "files": [
         "/dist"
     ],
     "scripts": {
         "deploy": "npm run build && npm publish",
         "build": "npm run build-plugin",
-        "build-plugin": "rm -rf dist && tsc",
+        "build-plugin": "rm -rf dist && npm run build-plugin-types && npm run build-plugin-esm && npm run build-plugin-cjs",
+        "build-plugin-types": "tsc --emitDeclarationOnly",
+        "build-plugin-cjs": "esbuild src/index.ts --platform=node --format=cjs --outfile=dist/index.cjs",
+        "build-plugin-esm": "esbuild src/index.ts --platform=node --format=esm --outfile=dist/index.mjs",
         "lint": "eslint --ext .ts ./src",
         "test": "vitest run"
     },
@@ -35,6 +43,7 @@
         "@types/picomatch": "^2.3.0",
         "@typescript-eslint/eslint-plugin": "^5.21.0",
         "@typescript-eslint/parser": "^5.21.0",
+        "esbuild": "0.16.10",
         "eslint": "^8.14.0",
         "typescript": "^5.0.3",
         "vite": "^4.0.1",
