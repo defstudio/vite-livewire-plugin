@@ -56,7 +56,7 @@
         "node": ">=14"
     },
     "dependencies": {
-        "minimatch": "^8.0.2",
+        "minimatch": "^9.0.3",
         "vite-plugin-full-reload": "^1.0.0"
     }
 }
