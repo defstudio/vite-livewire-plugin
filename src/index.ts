@@ -3,7 +3,7 @@
 import {HmrContext, Plugin} from "vite";
 import {Update} from "vite/types/hmrPayload";
 
-import {minimatch) from 'minimatch';
+import {minimatch} from 'minimatch';
 
 interface PluginConfig {
     refresh?: string | string[];
