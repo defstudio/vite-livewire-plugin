@@ -2,6 +2,24 @@
 
 All notable changes to `vite-livewire-plugin` will be documented in this file.
 
+## v1.3.2 - 2023-08-02
+
+### What's Changed
+
+- Bump vitest from 0.32.4 to 0.33.0 by @dependabot in https://github.com/defstudio/vite-livewire-plugin/pull/55
+- Bump minimatch from 8.0.4 to 9.0.3 by @dependabot in https://github.com/defstudio/vite-livewire-plugin/pull/54
+- Bump esbuild from 0.16.10 to 0.18.11 by @dependabot in https://github.com/defstudio/vite-livewire-plugin/pull/57
+- Bump @typescript-eslint/eslint-plugin from 5.62.0 to 6.0.0 by @dependabot in https://github.com/defstudio/vite-livewire-plugin/pull/58
+- Bump esbuild from 0.18.11 to 0.18.13 by @dependabot in https://github.com/defstudio/vite-livewire-plugin/pull/60
+- Bump @typescript-eslint/parser from 5.62.0 to 6.1.0 by @dependabot in https://github.com/defstudio/vite-livewire-plugin/pull/63
+- Bump esbuild from 0.18.13 to 0.18.14 by @dependabot in https://github.com/defstudio/vite-livewire-plugin/pull/62
+- Bump esbuild from 0.18.14 to 0.18.15 by @dependabot in https://github.com/defstudio/vite-livewire-plugin/pull/64
+- Bump esbuild from 0.18.15 to 0.18.16 by @dependabot in https://github.com/defstudio/vite-livewire-plugin/pull/65
+- Bump esbuild from 0.18.16 to 0.18.17 by @dependabot in https://github.com/defstudio/vite-livewire-plugin/pull/66
+- Bump vitest from 0.33.0 to 0.34.1 by @dependabot in https://github.com/defstudio/vite-livewire-plugin/pull/67
+
+**Full Changelog**: https://github.com/defstudio/vite-livewire-plugin/compare/v1.2.1...v1.3.2
+
 ## v1.2.1 - 2023-07-07
 
 ### What's Changed
