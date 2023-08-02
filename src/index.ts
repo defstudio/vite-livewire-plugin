@@ -219,7 +219,7 @@ export default function livewire(config?: PluginConfig | string | string[]): Liv
 
                             import.meta.hot.on('livewire-update', data => {
                                 // noinspection JSUnresolvedVariable
-                                if (typeof Livewire === "undefined" || Object.keys(Livewire.components).length === 0) {
+                                if (typeof Livewire === "undefined" || (Livewire.components !== undefined && Object.keys(Livewire.components).length === 0) || (Livewire.components === undefined && Object.keys(Livewire.all()).length === 0)) {
                                     console.log("[vite] full reload...");
                                     location.reload();
                                     return;
@@ -237,10 +237,15 @@ export default function livewire(config?: PluginConfig | string | string[]): Liv
                                     return;
                                 }
 
-                                for (const componentId in Livewire.components.componentsById) {
-                                    const component = Livewire.components.componentsById[componentId];
-                                    component.call('$refresh');
+                                if(Livewire.components === undefined){
+                                    Livewire.all().forEach(component => component.$wire.call('$refresh'));
+                                }else{
+                                    for (const componentId in Livewire.components.componentsById) {
+                                        const component = Livewire.components.componentsById[componentId];
+                                        component.call('$refresh');
+                                    }
                                 }
+
 
                                 lastLivewireUpdate = (new Date()).getTime();
                                 console.log('[vite] livewire hot updated.');
