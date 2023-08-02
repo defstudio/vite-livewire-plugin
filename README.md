@@ -37,7 +37,7 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/js/app.js',
             ],
-            refresh: false,
+            refresh: false, // <-- disables laravel autorefresh, to avoid conflicts
         ]),
         
         livewire({  // <-- add livewire plugin
