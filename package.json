@@ -1,9 +1,10 @@
 {
     "name": "@defstudio/vite-livewire-plugin",
-    "version": "1.3.2",
+    "version": "2.0.0-alpha.1",
     "author": {
         "name": "Fabio Ivona"
     },
+    "type": "module",
     "description": "Livewire plugin for Vite",
     "keywords": [
         "laravel",
@@ -19,8 +20,7 @@
     "license": "MIT",
     "exports": {
         ".": {
-            "import": "./dist/index.mjs",
-            "require": "./dist/index.cjs",
+            "default": "./dist/index.js",
             "types": "./dist/index.d.ts"
         }
     },
@@ -30,10 +30,9 @@
     "scripts": {
         "deploy": "npm run build && npm publish",
         "build": "npm run build-plugin",
-        "build-plugin": "rm -rf dist && npm run build-plugin-types && npm run build-plugin-esm && npm run build-plugin-cjs",
+        "build-plugin": "rm -rf dist && npm run build-plugin-types && npm run build-plugin-esm",
         "build-plugin-types": "tsc --emitDeclarationOnly",
-        "build-plugin-cjs": "esbuild src/index.ts --platform=node --format=cjs --outfile=dist/index.cjs",
-        "build-plugin-esm": "esbuild src/index.ts --platform=node --format=esm --outfile=dist/index.mjs",
+        "build-plugin-esm": "esbuild src/index.ts --platform=node --format=esm --outfile=dist/index.js",
         "lint": "eslint --ext .ts ./src",
         "test": "vitest run"
     },
@@ -53,7 +52,7 @@
         "vite": "^5.0.0"
     },
     "engines": {
-        "node": ">=18"
+        "node": "^18.0.0 || >=20.0.0"
     },
     "dependencies": {
         "minimatch": "^9.0.3",
