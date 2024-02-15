@@ -150,10 +150,6 @@ export default defineConfig({
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently. [Follow Us](https://twitter.com/FabioIvona) on Twitter for more updates about this package.
 
-## Upgrade
-
-Please see [UPGRADE GUIDE](UPGRADE.md) for more information on upgrading between versions
-
 ## Contributing
 
 Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.

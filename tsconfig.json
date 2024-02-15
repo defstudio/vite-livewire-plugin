@@ -2,8 +2,8 @@
     "compilerOptions": {
         "outDir": "./dist",
         "target": "ES2020",
-        "module": "NodeNext",
-        "moduleResolution": "NodeNext",
+        "module": "ES2020",
+        "moduleResolution": "node",
         "skipLibCheck": true,
         "resolveJsonModule": true,
         "strict": true,
