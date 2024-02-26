@@ -2,6 +2,18 @@
 
 All notable changes to `vite-livewire-plugin` will be documented in this file.
 
+## v2.0.0 - 2024-02-26
+
+### What's Changed
+
+* Adds Vite 5 support by @BALOTIAS in https://github.com/defstudio/vite-livewire-plugin/pull/99
+
+### New Contributors
+
+* @BALOTIAS made their first contribution in https://github.com/defstudio/vite-livewire-plugin/pull/99
+
+**Full Changelog**: https://github.com/defstudio/vite-livewire-plugin/compare/v1.3.2...v2.0.0
+
 ## v1.3.2 - 2023-08-02
 
 ### What's Changed
