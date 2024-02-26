@@ -1,6 +1,6 @@
 {
     "name": "@defstudio/vite-livewire-plugin",
-    "version": "2.0.0-alpha.2",
+    "version": "2.0.0",
     "author": {
         "name": "Fabio Ivona"
     },
