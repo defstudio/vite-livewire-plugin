@@ -94,16 +94,9 @@ export default defineConfig({
 ```
 ## Usage & Documentation
 
-After a new bot is created and added to a chat/group/channel (as described [in our documentation](https://docs.defstudio.it/telegraph/v1/quickstart/new-bot)),
-the `Telegraph` facade can be used to easily send messages and interact with it:
-
-```php
-Telegraph::message('this is great')->send();
-```
-
 An extensive documentation is available at
 
-https://docs.defstudio.it/telegraph
+https://docs.defstudio.it/vite-livewire-plugin
 
 ## Changelog
 
