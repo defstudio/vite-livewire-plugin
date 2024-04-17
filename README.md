@@ -14,6 +14,8 @@ Demo video available [below](#demo) in this page
 
 ## Installation
 
+Prior to install, read carefully our documentation at https://docs.defstudio.it/vite-livewire-plugin
+
 ```bash
 npm install --save-dev @defstudio/vite-livewire-plugin
 ```
@@ -22,7 +24,7 @@ npm install --save-dev @defstudio/vite-livewire-plugin
 
 Livewire hot reload can be enabled by adding the `livewire()` plugin to the `vite.config.js` file:
 
-```js
+```javascript
 import {defineConfig} from 'vite';
 import laravel from 'laravel-vite-plugin';
 
@@ -90,61 +92,18 @@ export default defineConfig({
     ],
 });
 ```
+## Usage & Documentation
 
-### Watching files for hot reload trigger
+After a new bot is created and added to a chat/group/channel (as described [in our documentation](https://docs.defstudio.it/telegraph/v1/quickstart/new-bot)),
+the `Telegraph` facade can be used to easily send messages and interact with it:
 
-by default `livewire()` plugin will trigger hot reload when a `.blade.php` file changes in `resources/views/**` folders or a  `.php` file changes in `app/**/Livewire/**`, `app/**/Filament/**` or `app/View/Components/**` folders.
-
-if you wish to add/change this behavior (because you have livewire files in other locations), this can be achieved using the `watch` config:
-
-```js
-// vite.config.js 
-
-import livewire, {defaultWatches} from '@defstudio/vite-livewire-plugin';
-
-export default defineConfig({
-    //...
-    
-    plugins: [
-        //...
-        
-        livewire({
-            refresh: ['resources/css/app.css'],
-            watch: [
-                ...defaultWatches,
-                '**/domains/**/Livewire/**/*.php',
-            ]
-        }),
-    ],
-});
+```php
+Telegraph::message('this is great')->send();
 ```
 
-### Opt in hot reload
+An extensive documentation is available at
 
-In some cases (i.e. when working on non-livewire elements), you'll want to full reload the page when a blade file is changed.
-
-By adding an `VITE_LIVEWIRE_OPT_IN=true` entry in your `.env` file an opt-in checkbox will show on the bottom right corner of the webpage, allowing you to enable/disable livewire hot reload. If disabled: a full page reload will be triggered when blade files are changed.
-
-If you're using a debug toolbar like [Debugbar for Laravel](https://github.com/barryvdh/laravel-debugbar), [Clockwork](https://underground.works/clockwork/) or [Laravel Telescope Toolbar](https://github.com/fruitcake/laravel-telescope-toolbar), these are taken into account, while positioning the checkbox. No special configuration is needed.
-There may be another (debug) toolbar or something else in your view interfere with the checkbox. Therefore, a config option `bottomPosition` is available to add more spacing to the bottom, to make the checkbox visible again. The value must be of type number and is considered to be pixels.
-
-```js
-// vite.config.js 
-
-import livewire, {defaultWatches} from '@defstudio/vite-livewire-plugin';
-
-export default defineConfig({
-    //...
-    
-    plugins: [
-        //...
-        
-        livewire({
-            bottomPosition: 34,
-        }),
-    ],
-});
-```
+https://docs.defstudio.it/telegraph
 
 ## Changelog
 
