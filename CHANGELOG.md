@@ -2,6 +2,15 @@
 
 All notable changes to `vite-livewire-plugin` will be documented in this file.
 
+## v2.0.1 - 2024-04-17
+
+### What's Changed
+
+* Bump esbuild from 0.20.1 to 0.20.2 by @dependabot in https://github.com/defstudio/vite-livewire-plugin/pull/111
+* new docs by @fabio-ivona in https://github.com/defstudio/vite-livewire-plugin/pull/118
+
+**Full Changelog**: https://github.com/defstudio/vite-livewire-plugin/compare/v2.0.0...v2.0.1
+
 ## v2.0.0 - 2024-02-26
 
 ### What's Changed
