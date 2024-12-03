@@ -270,7 +270,7 @@ export default function livewire(config?: PluginConfig | string | string[]): Liv
 
                         let includeInRefresh = true;
                         ctx.modules[0].importers.forEach(importer => {
-                            //@ts-expect-error
+                            //@ts-expect-error may be nullish depending on npm used version
                             includeInRefresh = !importer.file?.endsWith(path) ?? false;
                         });
                         return includeInRefresh;
