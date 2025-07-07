@@ -41,16 +41,16 @@
         "@types/minimatch": "^5.1.2",
         "@types/node": "^20.11.16",
         "@types/picomatch": "^3.0.1",
-        "@typescript-eslint/eslint-plugin": "^6.21.0",
+        "@typescript-eslint/eslint-plugin": "^8.8.1",
         "@typescript-eslint/parser": "^8.8.1",
         "esbuild": "0.23.0",
         "eslint": "^9.12.0",
         "typescript": "^5.3.3",
-        "vite": "^5.0.0||^6.0.2",
+        "vite": "^5.0.0||^6.0.2||^7.0.0",
         "vitest": "^2.0.1"
     },
     "peerDependencies": {
-        "vite": "^6.0.2"
+        "vite": "^7.0.0"
     },
     "engines": {
         "node": ">=18"
