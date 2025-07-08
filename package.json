@@ -50,7 +50,7 @@
         "globals": "^16.3.0",
         "typescript": "^5.3.3",
         "vite": "^5.0.0||^6.0.2||^7.0.0",
-        "vitest": "^2.0.1"
+        "vitest": "^3.2.4"
     },
     "peerDependencies": {
         "vite": "^7.0.0"
