@@ -31,4 +31,8 @@ module.exports = defineConfig([{
     },
 
     extends: compat.extends("eslint:recommended", "plugin:@typescript-eslint/recommended"),
+
+    rules: {
+        "no-trailing-spaces": "error",
+    },
 }]);
