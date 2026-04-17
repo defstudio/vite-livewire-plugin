@@ -1,7 +1,6 @@
 // noinspection JSUnusedLocalSymbols
 
-import {HmrContext, Plugin} from "vite";
-import {Update} from "vite/types/hmrPayload";
+import {EnvironmentModuleNode, HotUpdateOptions, Plugin, Update} from "vite";
 
 import {minimatch} from 'minimatch';
 
@@ -34,7 +33,7 @@ export const defaultConfig: PluginConfig = {
     bottomPosition: 10,
 }
 
-function triggerUpdates(ctx: HmrContext, refreshList: string[]): void {
+function triggerUpdates(ctx: HotUpdateOptions, refreshList: string[]): void {
     const updates = [];
     for (const path of refreshList) {
         let type;
@@ -55,7 +54,7 @@ function triggerUpdates(ctx: HmrContext, refreshList: string[]): void {
     }
 
     if (updates.length > 0) {
-        ctx.server.ws.send({
+        ctx.server.hot.send({
             type: 'update',
             updates: updates,
         });
@@ -63,8 +62,8 @@ function triggerUpdates(ctx: HmrContext, refreshList: string[]): void {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function refresh(ctx: HmrContext, config: ResolvedPluginConfig): void {
-    ctx.server.ws.send({
+function refresh(ctx: HotUpdateOptions, config: ResolvedPluginConfig): void {
+    ctx.server.hot.send({
         type: 'custom',
         event: 'livewire-update',
         data: {
@@ -123,7 +122,7 @@ export default function livewire(config?: PluginConfig | string | string[]): Liv
     const pluginConfig = resolvePluginConfig(config);
 
     return {
-        name: 'Tailwind Plugin',
+        name: 'Vite Livewire Plugin',
         pluginConfig: pluginConfig,
         resolveId(id) {
             if (id === virtualModuleId || id === typoVirtualModuleId) {
@@ -255,7 +254,10 @@ export default function livewire(config?: PluginConfig | string | string[]): Liv
                 `;
             }
         },
-        handleHotUpdate(ctx) {
+        hotUpdate(ctx) {
+            if (ctx.type !== 'update') {
+                return;
+            }
 
             if (minimatch(ctx.file, '**/storage/framework/views/**/*.php')) {
                 return [];
@@ -269,9 +271,9 @@ export default function livewire(config?: PluginConfig | string | string[]): Liv
                         }
 
                         let includeInRefresh = true;
-                        ctx.modules[0].importers.forEach(importer => {
-                            //@ts-expect-error may be nullish depending on npm used version
-                            includeInRefresh = !importer.file?.endsWith(path) ?? false;
+                        ctx.modules[0].importers.forEach((importer: EnvironmentModuleNode) => {
+                            // may be nullish depending on npm used version
+                            includeInRefresh = !importer.file?.endsWith(path);
                         });
                         return includeInRefresh;
                     })];
