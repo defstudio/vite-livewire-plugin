@@ -3,25 +3,31 @@
 
 import {afterEach, describe, expect, it, vi} from "vitest";
 import livewire, {defaultWatches} from "../src";
-import {HmrContext, HMRPayload, ViteDevServer} from "vite";
+import {HotUpdateOptions, HotPayload, ViteDevServer, Plugin} from "vite";
 
-function fakeContext(file = ''): HmrContext {
+function fakeContext(file = ''): HotUpdateOptions {
     return {
+        type: 'update',
         file: file,
         modules: [],
         read(): string | Promise<string> {
             return '';
         },
         server: {
-            ws: {
-
-                send: (payload: HMRPayload) => {
+            hot: {
+                send: (payload: HotPayload) => {
                     //.. do nothing
                 }
             }
         } as ViteDevServer,
         timestamp: 0
     };
+}
+
+function callHotUpdate(hook: Plugin['hotUpdate'], ctx: HotUpdateOptions) {
+    if (!hook) return;
+    const fn = typeof hook === 'function' ? hook : hook.handler;
+    return fn.call({} as never, ctx);
 }
 
 function freezeTime(date = new Date(2000, 1, 1, 13)): Date
@@ -146,16 +152,16 @@ describe('hot update handling', () => {
     it("should not trigger hot update if file doesn't match any pattern", function () {
         const plugin = livewire();
 
-        plugin.handleHotUpdate?.(fakeContext());
+        callHotUpdate(plugin.hotUpdate, fakeContext());
     });
 
     it("should trigger hot update if file matches default class pattern", function () {
         const plugin = livewire();
 
         const context = fakeContext('/var/www/app/Html/Livewire/Test.php');
-        const spy = vi.spyOn(context.server.ws, 'send');
+        const spy = vi.spyOn(context.server.hot, 'send');
 
-        plugin.handleHotUpdate?.(context);
+        callHotUpdate(plugin.hotUpdate, context);
 
         expect(spy).toHaveBeenCalledWith({
             type: 'custom',
@@ -170,13 +176,13 @@ describe('hot update handling', () => {
         });
 
         const context = fakeContext('/var/www/app/Html/Livewire/Test.php');
-        const spy = vi.spyOn(context.server.ws, 'send');
+        const spy = vi.spyOn(context.server.hot, 'send');
 
-        plugin.handleHotUpdate?.(context);
+        callHotUpdate(plugin.hotUpdate, context);
         expect(spy).toHaveBeenCalledTimes(0);
 
         context.file = 'var/www/app/modules/invoices/views/livewire/test.blade.php';
-        plugin.handleHotUpdate?.(context);
+        callHotUpdate(plugin.hotUpdate, context);
         expect(spy).toHaveBeenCalledTimes(1);
     });
 
@@ -189,9 +195,9 @@ describe('hot update handling', () => {
         });
 
         const context = fakeContext('/var/www/app/Html/Livewire/Test.php');
-        const spy = vi.spyOn(context.server.ws, 'send');
+        const spy = vi.spyOn(context.server.hot, 'send');
 
-        plugin.handleHotUpdate?.(context);
+        callHotUpdate(plugin.hotUpdate, context);
         expect(spy).toHaveBeenCalledWith({
             type: 'custom',
             event: 'livewire-update',
@@ -199,7 +205,7 @@ describe('hot update handling', () => {
         });
 
         context.file = 'var/www/app/modules/invoices/views/livewire/test.blade.php';
-        plugin.handleHotUpdate?.(context);
+        callHotUpdate(plugin.hotUpdate, context);
         expect(spy).toHaveBeenCalledTimes(2);
         expect(spy).toHaveBeenLastCalledWith({
             type: 'custom',
@@ -212,9 +218,9 @@ describe('hot update handling', () => {
         const plugin = livewire();
 
         const context = fakeContext('/var/www/resources/views/test.blade.php');
-        const spy = vi.spyOn(context.server.ws, 'send');
+        const spy = vi.spyOn(context.server.hot, 'send');
 
-        plugin.handleHotUpdate?.(context);
+        callHotUpdate(plugin.hotUpdate, context);
 
         expect(spy).toHaveBeenCalledTimes(1);
     });
@@ -225,9 +231,9 @@ describe('hot update handling', () => {
         });
 
         const context = fakeContext('/var/www/resources/components/test.blade.php');
-        const spy = vi.spyOn(context.server.ws, 'send');
+        const spy = vi.spyOn(context.server.hot, 'send');
 
-        plugin.handleHotUpdate?.(context);
+        callHotUpdate(plugin.hotUpdate, context);
 
         expect(spy).toHaveBeenCalledTimes(0);
     });
@@ -238,11 +244,11 @@ describe('hot update handling', () => {
         });
 
         const context = fakeContext('/var/www/resources/views/test.blade.php');
-        const spy = vi.spyOn(context.server.ws, 'send');
+        const spy = vi.spyOn(context.server.hot, 'send');
 
         const time = freezeTime();
 
-        plugin.handleHotUpdate?.(context);
+        callHotUpdate(plugin.hotUpdate, context);
 
         expect(spy).toHaveBeenCalledTimes(2);
 
