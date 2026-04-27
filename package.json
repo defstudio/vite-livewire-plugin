@@ -14,7 +14,7 @@
     "homepage": "https://github.com/def-studio/vite-livewire-plugin",
     "repository": {
         "type": "git",
-        "url": "https://github.com/def-studio/vite-livewire-plugin"
+        "url": "https://github.com/def-studio/vite-livewire-plugin.git"
     },
     "license": "MIT",
     "exports": {
