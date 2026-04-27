@@ -11,10 +11,10 @@
         "livewire",
         "vite-plugin"
     ],
-    "homepage": "https://github.com/def-studio/vite-livewire-plugin",
+    "homepage": "https://github.com/defstudio/vite-livewire-plugin",
     "repository": {
         "type": "git",
-        "url": "https://github.com/def-studio/vite-livewire-plugin.git"
+        "url": "https://github.com/defstudio/vite-livewire-plugin.git"
     },
     "license": "MIT",
     "exports": {
