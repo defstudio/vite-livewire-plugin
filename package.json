@@ -59,7 +59,7 @@
         "node": "^20.19.0 || >=22.12.0"
     },
     "dependencies": {
-        "minimatch": "^11.0.4",
+        "minimatch": "^11.0.5",
         "vite-plugin-full-reload": "^1.1.0"
     }
 }
