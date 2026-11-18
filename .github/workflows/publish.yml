@@ -7,17 +7,28 @@ permissions:
   id-token: write
   contents: read
 
-  
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      
+
       - uses: actions/setup-node@v6
         with:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
 
       - run: npm install
+
+      - name: Set package version from release tag
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          if [[ ! "$RELEASE_TAG" =~ ^v?[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$ ]]; then
+            echo "::error::Release tag must be a semantic version, for example v3.0.8."
+            exit 1
+          fi
+          npm version "${RELEASE_TAG#v}" --no-git-tag-version --allow-same-version
+
       - run: npm run deploy
