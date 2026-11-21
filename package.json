@@ -48,7 +48,7 @@
         "esbuild": "^0.27.0 || ^0.28.0",
         "eslint": "^10.0.0",
         "globals": "^17.0.0",
-        "typescript": "^6.0.2",
+        "typescript": "^7.0.2",
         "vite": "^8.0.3",
         "vitest": "^4.0.18"
     },
